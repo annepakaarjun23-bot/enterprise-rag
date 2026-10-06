@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 from matplotlib.patches import FancyBboxPatch
 
-SRC = Path("evals/results/runs.jsonl")
+SRC = Path("evals/results/index.jsonl")
 OUT = Path("docs/images/eval_dashboard.png")
 THRESH = 0.7
 TOTAL_Q = 50

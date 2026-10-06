@@ -1,0 +1,96 @@
+{
+  "run": "retriever_dense_automergeTrue_k5_gpt-4o-mini_20261004_1136",
+  "config": {
+    "mode": "dense",
+    "automerge": true,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "threshold": 0.7,
+    "max_chars_per_context": 3000,
+    "max_concurrent": 2
+  },
+  "timing": {
+    "retrieve_s": 7.4,
+    "judge_s": 18.7
+  },
+  "summary": {
+    "questions": 3,
+    "passed_all_metrics": 3,
+    "metrics": {
+      "Contextual Precision": {
+        "avg_score": 1.0,
+        "passed": 3,
+        "total": 3
+      },
+      "Contextual Recall": {
+        "avg_score": 0.917,
+        "passed": 3,
+        "total": 3
+      }
+    },
+    "errored_ids": [],
+    "failed_ids": []
+  },
+  "rows": [
+    {
+      "id": "q002",
+      "input": "Which context engineering category is responsible for supplying subagents with optimized information to improve their execution?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q001",
+      "input": "I keep getting an unknown model error when invoking the API—what steps should I take to resolve it?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "input": "How can I attach a progress callback when initializing a FastMCP client for use with MCPAdapter?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

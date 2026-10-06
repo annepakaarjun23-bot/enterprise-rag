@@ -1,0 +1,1192 @@
+{
+  "run": "e2e_hybrid_automergeTrue_rerankFalse_k5_gpt-4o-mini_20261006_2044",
+  "config": {
+    "mode": "hybrid",
+    "automerge": true,
+    "rerank": false,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "max_concurrent": 2,
+    "gen_concurrency": 4
+  },
+  "timing": {
+    "retrieve_s": 52.0,
+    "generate_s": 91.8,
+    "judge_s": 1262.2
+  },
+  "summary": {
+    "questions": 34,
+    "passed_all_metrics": 15,
+    "metrics": {
+      "Contextual Precision": {
+        "avg_score": 0.833,
+        "passed": 27,
+        "total": 34
+      },
+      "Contextual Recall": {
+        "avg_score": 0.85,
+        "passed": 27,
+        "total": 34
+      },
+      "Faithfulness": {
+        "avg_score": 0.862,
+        "passed": 28,
+        "total": 34
+      },
+      "Answer Relevancy": {
+        "avg_score": 0.887,
+        "passed": 27,
+        "total": 34
+      }
+    },
+    "errored_ids": [
+      "q043",
+      "q044"
+    ],
+    "failed_ids": [
+      "q011",
+      "q016",
+      "q017",
+      "q019",
+      "q020",
+      "q021",
+      "q022",
+      "q023",
+      "q024",
+      "q031",
+      "q032",
+      "q035",
+      "q036",
+      "q038",
+      "q040",
+      "q041",
+      "q042",
+      "q043",
+      "q044"
+    ]
+  },
+  "rows": [
+    {
+      "id": "q011",
+      "input": "What happened to the prompted output option in create_agent?",
+      "answer": "\n\nPrompted output is no longer supported via the `response_format` argument in `create_agent`. Compared to strategies like artificial tool calling and provider native structured output, prompted output has not proven to be particularly reliable.\n\n```python v1 (new)\n# Using ToolStrategy\nagent = create_agent(\n    model=\"gpt-5.4-mini\",\n    tools=tools,\n    # explicitly using tool strategy\n    response_format=ToolStrategy(OutputSchema)  # [!code highlight]\n)\n```\n\n```python v0 (old)\n# Using prompted output (no longer supported)\nagent = create_agent(\n    model=\"gpt-5.4-mini\",\n    tools=tools,\n    response_format=(\"please generate ...\", OutputSchema)  # [!code highlight]\n)\n```",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "input": "How do I run evals and track them in LangSmith?",
+      "answer": "\n\nTo run evals and track them in LangSmith, you can use either the pytest integration or the `evaluate` function. For pytest integration, you need to set the required environment variables and run the test with the `--langsmith-output` flag. For the `evaluate` function, you need to create a LangSmith dataset with the correct schema and use the `evaluate` function from the `langsmith` client.\n\n```python\n# pytest integration\npytest test_trajectory.py --langsmith-output\n\n# evaluate function\nfrom langsmith import Client\nfrom agentevals.trajectory.llm import create_trajectory_llm_as_judge, TRAJECTORY_ACCURACY_PROMPT\n\nclient = Client()\n\ntrajectory_evaluator = create_trajectory_llm_as_judge(\n    model=\"openai:o3-mini\",\n    prompt=TRAJECTORY_ACCURACY_PROMPT,\n)\n\ndef run_agent(inputs):\n    return agent.invoke(inputs)[\"messages\"]\n\nexperiment_results = client.evaluate(\n    run_agent,\n    data=\"your_dataset_name\",\n    evaluators=[trajectory_evaluator]\n)\n```\n\nNote that you need to set the `LANGSMITH_API_KEY` and `LANGSMITH_TRACING` environment variables before running the evaluation.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q013",
+      "input": "Can I have private state in a subgraph that's hidden from the parent?",
+      "answer": "\n\nYou can have private state in a subgraph that's hidden from the parent graph by defining a subgraph with a different state schema that doesn't share any keys with the parent graph state. \n\n```python\nclass SubgraphState(TypedDict):\n    bar: str  # private to SubgraphState\n    baz: str  # private to SubgraphState\n\ndef subgraph_node_1(state: SubgraphState):\n    return {\"baz\": \"baz\"}\n\nsubgraph_builder = StateGraph(SubgraphState)\nsubgraph_builder.add_node(subgraph_node_1)\nsubgraph_builder.add_edge(START, \"subgraph_node_1\")\nsubgraph = subgraph_builder.compile()\n```\n\nIn this case, the parent graph will not have access to the `bar` and `baz` keys in the subgraph state.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8571428571428571,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q014",
+      "input": "How do I add retry logic around model calls in my agent?",
+      "answer": "\n\nYou can add retry logic around model calls in your agent by using the `ModelRetryMiddleware` class from the `langchain.agents.middleware` module. \n\n```python\nfrom langchain.agents.middleware import ModelRetryMiddleware\n\n# Basic usage with default settings (2 retries, exponential backoff)\nagent = create_agent(\n    model=\"gpt-5.5\",\n    tools=[search_tool],\n    middleware=[ModelRetryMiddleware()],\n)\n```\n\nYou can also customize the retry behavior by passing additional arguments to the `ModelRetryMiddleware` constructor, such as `max_retries`, `backoff_factor`, `initial_delay`, `on_failure`, and `retry_on`. \n\nFor example, to retry specific exceptions only, you can pass a tuple of exception types to the `retry_on` argument:\n\n```python\nclass TimeoutError(Exception):\n    \"\"\"Custom exception for timeout errors.\"\"\"\n    pass\n\nclass ConnectionError(Exception):\n    \"\"\"Custom exception for connection errors.\"\"\"\n    pass\n\n# Retry specific exceptions only\nretry = ModelRetryMiddleware(\n    max_retries=4,\n    retry_on=(TimeoutError, ConnectionError),\n    backoff_factor=1.5,\n)\n```\n\nYou can also use a custom function to determine whether to retry an exception:\n\n```python\ndef should_retry(error: Exception) -> bool:\n    # Only retry on rate limit errors\n    if isinstance(error, TimeoutError):\n        return True\n    # Or check for specific HTTP status codes\n    if hasattr(error, \"status_code\"):\n        return error.status_code in (429, 503)\n    return False\n\nretry_with_filter = ModelRetryMiddleware(\n    max_retries=3,\n    retry_on=should_retry,\n)\n```",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8571428571428571,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q015",
+      "input": "What's the difference between node-style and wrap-style hooks in middleware?",
+      "answer": "\n\nNode-style hooks run at specific execution points (before agent starts, before each model call, after each model response, after agent completes) and return a dict that is applied to the agent state using the graph's reducers. Wrap-style hooks run around each call (model or tool) and return ExtendedModelResponse with a Command to inject state updates alongside the model response, or a Command directly for tool calls.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.95,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q016",
+      "input": "How do I update agent state from middleware?",
+      "answer": "\n\nYou can update agent state from middleware by using the `state` attribute of the `AgentMiddleware` class. This attribute is an instance of `AgentState`, which is a dataclass that stores the state of the agent.\n\nTo update the state, you can modify the `state` attribute directly in the `before_model` or `after_model` methods of your custom middleware class.\n\nHere is an example from the context:\n\n```python\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        count = state.get(\"model_call_count\", 0)\n        if count > 10:\n            return {\"jump_to\": \"end\"}\n        return None\n\n    def after_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        return {\"model_call_count\": state.get(\"model_call_count\", 0) + 1}\n```\n\nIn this example, the `after_model` method updates the `model_call_count` attribute of the `state` object.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `get` method to update the state conditionally. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        count = state.get(\"model_call_count\", 0)\n        if count > 10:\n            state.update({\"model_call_count\": count + 1})\n            return {\"jump_to\": \"end\"}\n        return None\n```\n\nNote that the `get` method returns `None` if the key is not present in the state, so you need to use the `or` operator to provide a default value.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `dict` constructor to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = dict(state, model_call_count=state.get(\"model_call_count\", 0) + 1, user_id=\"user-123\")\n        return None\n```\n\nNote that the `dict` constructor creates a new dictionary with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `asdict` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state = state.asdict()\n        state[\"model_call_count\"] = state.get(\"model_call_count\", 0) + 1\n        state[\"user_id\"] = \"user-123\"\n        return None\n```\n\nNote that the `asdict` method returns a dictionary representation of the `AgentState` dataclass, so you can update the attributes as needed.\n\nYou can also use the `update` method of the `AgentState` dataclass to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState` dataclass with the updated attributes, so you need to assign the result back to the `state` attribute.\n\nYou can also use the `set` method to update the state. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.set(\"model_call_count\", state.get(\"model_call_count\", 0) + 1)\n        state.set(\"user_id\", \"user-123\")\n        return None\n```\n\nNote that the `set` method replaces the existing value of the key with the new value.\n\nYou can also use the `update` method to update multiple attributes at once. For example:\n\n```python\nclass CustomState(AgentState):\n    model_call_count: NotRequired[int]\n    user_id: NotRequired[str]\n\nclass CallCounterMiddleware(AgentMiddleware[CustomState]):\n    state_schema = CustomState  # [!code highlight]\n\n    def before_model(self, state: CustomState, runtime) -> dict[str, Any] | None:\n        state.update({\"model_call_count\": state.get(\"model_call_count\", 0) + 1, \"user_id\": \"user-123\"})\n        return None\n```\n\nNote that the `update` method returns a new instance of the `AgentState`",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5833333333333334,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q017",
+      "input": "How do I implement human-in-the-loop to review tool calls before execution?",
+      "answer": "\n\nYou can implement human-in-the-loop review of tool calls by using the `interrupt` function in conjunction with the `HumanInTheLoopMiddleware` middleware. This allows you to pause the execution of the tool call and wait for human review before proceeding.\n\nHere is an example of how to implement this:\n\n```python\nfrom langgraph.checkpoint.memory import InMemorySaver\nfrom langgraph.graph.message import add_messages\nfrom langgraph.types import Command, interrupt\nfrom langgraph.agents.middleware import HumanInTheLoopMiddleware\n\ncheckpointer = InMemorySaver()\n\n@entrypoint(checkpointer=checkpointer)\ndef agent(messages, previous):\n    if previous is not None:\n        messages = add_messages(previous, messages)\n\n    llm_response = call_model(messages).result()\n    while True:\n        if not llm_response.tool_calls:\n            break\n\n        # Review tool calls\n        tool_results = []\n        tool_calls = []\n        for i, tool_call in enumerate(llm_response.tool_calls):\n            review = review_tool_call(tool_call)\n            if isinstance(review, ToolMessage):\n                tool_results.append(review)\n            else:  # is a validated tool call\n                tool_calls.append(review)\n                if review != tool_call:\n                    llm_response.tool_calls[i] = review  # update message\n\n        # Execute remaining tool calls\n        tool_result_futures = [call_tool(tool_call) for tool_call in tool_calls]\n        remaining_tool_results = [fut.result() for fut in tool_result_futures]\n\n        # Append to message list\n        messages = add_messages(\n            messages,\n            [llm_response, *tool_results, *remaining_tool_results],\n        )\n\n        # Call model again\n        llm_response = call_model(messages).result()\n\n    # Generate final response\n    messages = add_messages(messages, llm_response)\n    return entrypoint.final(value=llm_response, save=messages)\n```\n\nYou can also use the `HumanInTheLoopMiddleware` to configure the `interrupt_on` parameter to specify which tool calls to interrupt. For example:\n\n```python\ncalendar_agent = create_agent(\n    model,\n    tools=[create_calendar_event, get_available_time_slots],\n    system_prompt=CALENDAR_AGENT_PROMPT,\n    middleware=[\n        HumanInTheLoopMiddleware(\n            interrupt_on={\"create_calendar_event\": True},\n            description_prefix=\"Calendar event pending approval\",\n        ),\n    ],\n)\n```\n\nThis will interrupt the `create_calendar_event` tool call and wait for human review before proceeding.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.9333333333333333,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.56,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q018",
+      "input": "How can I view the history of checkpoints for a thread?",
+      "answer": "\n\nYou can view the history of checkpoints for a thread by using the `list` method of the `checkpointer` object, passing in the thread's configuration as an argument. \n\n```\nconfig = {\n    \"configurable\": {\n        \"thread_id\": \"1\"  \n    }\n}\nlist(checkpointer.list(config))\n```\n\nNote that the `checkpointer` object and its methods are not explicitly defined in the provided context, so this answer is based on the assumption that it is a valid object and method.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q019",
+      "input": "How do I return a different value to the caller than what I save to checkpoint?",
+      "answer": "\n\nYou can return a different value to the caller than what you save to checkpoint by using the `entrypoint.final` primitive. The `entrypoint.final` primitive takes two values: the return value of the entrypoint and the value to be saved in the checkpoint. The type annotation is `entrypoint.final[return_type, save_type]`.\n\n```python\n@entrypoint(checkpointer=checkpointer)\ndef accumulate(n: int, *, previous: int | None) -> entrypoint.final[int, int]:\n    previous = previous or 0\n    total = previous + n\n    # Return the *previous* value to the caller but save the *new* total to the checkpoint.\n    return entrypoint.final(value=previous, save=total)\n```\n\nThis allows you to decouple the value returned to the caller from the value saved in the checkpoint.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q020",
+      "input": "What changed with streaming node names in v1?",
+      "answer": "\n\nThe streaming node name changed from `\"agent\"` to `\"model\"` in v1 to better reflect the node's purpose.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q021",
+      "input": "How do I build a voice agent with sub-700ms latency?",
+      "answer": "\n\nTo build a voice agent with sub-700ms latency, you can use the sandwich architecture, which balances performance, controllability, and access to modern model capabilities. This architecture can achieve sub-700ms latency with some STT and TTS providers while maintaining control over modular components.\n\n```python\npipeline = (\n    RunnableGenerator(stt_stream)      # Audio → STT events\n    | RunnableGenerator(agent_stream)  # STT events → Agent events\n    | RunnableGenerator(tts_stream)    # Agent events → TTS audio\n)\n```\n\nThis involves using a streaming pipeline where each stage processes data asynchronously, allowing downstream components to begin processing before upstream stages complete, minimizing end-to-end latency.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8666666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q022",
+      "input": "How do I enable LangSmith tracing for my application?",
+      "answer": "\n\nTo enable LangSmith tracing for your application, set the following environment variables:\n\n```python\nexport LANGSMITH_TRACING=true\nexport LANGSMITH_API_KEY=<your-api-key>\n```\n\nYou can also set them in Python:\n\n```python\nimport getpass\nimport os\n\nos.environ[\"LANGSMITH_TRACING\"] = \"true\"\nos.environ[\"LANGSMITH_API_KEY\"] = getpass.getpass()\n```\n\nNote: You need to sign up for LangSmith and replace `<your-api-key>` with your actual API key.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q023",
+      "input": "How do I handle state schema changes without breaking existing checkpoints?",
+      "answer": "\n\nWhen making state schema changes, you should avoid renaming or removing nodes, as well as tightening state fields, such as making an `Optional` field required, narrowing a type, or adding a new required field with no default. Existing checkpoints will not satisfy the new schema. Instead, consider the following strategies:\n\n*   Use subgraphs to encapsulate changes and minimize the impact on the parent graph.\n*   Use `UntrackedValue` for state fields that should not be persisted across checkpoints.\n*   Use `ReducedValue` for persistent data that needs to be updated.\n*   Update the state schema to be more permissive, allowing existing checkpoints to still satisfy the new schema.\n\n**Note:** Renaming or removing edges between nodes that still exist is safe for in-flight threads.\n\n**Example:** [S3] provides an example of how to handle technical compatibility issues, including state schema changes.\n\n```python\n# Renaming or removing a node\n# Renaming or removing a State key\n# Tightening a State field\n```",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5833333333333333,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.9166666666666666,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q024",
+      "input": "How do I transfer control between agents in a multi-agent system?",
+      "answer": "\n\nYou can transfer control between agents in a multi-agent system using the `Send()` primitive, which describes which agent to hand control to and the payload to send to that agent. \n\n```python\nfrom langgraph.types import Command, Send\n\ndef handoff_tool(\n    # this is populated by the calling agent\n    task_description: Annotated[\n        str,\n        \"Description of what the next agent should do, including all of the relevant context.\",\n    ],\n    # these parameters are ignored by the LLM\n    state: Annotated[MessagesState, InjectedState],\n) -> Command:\n    task_description_message = {\"role\": \"user\", \"content\": task_description}\n    agent_input = {**state, \"messages\": [task_description_message]}\n    return Command(\n        # highlight-next-line\n        goto=[Send(agent_name, agent_input)],\n        graph=Command.PARENT,\n    )\n```\n\nThis is done by using the `Send()` primitive in the `handoff_tool` function, which is part of the handoffs architecture.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q025",
+      "input": "What's the difference between checkpointers and stores?",
+      "answer": "\n\nCheckpointers persist graph state snapshots across different interactions within a session, allowing for features like human-in-the-loop, time travel, and fault tolerance. Stores, on the other hand, provide a mechanism to store application-defined key-value data across threads, used for user preferences, facts, and shared knowledge.\n\n| | Checkpointer | Store |\n| ---- | ---- | ---- |\n| Persists | Graph state snapshots | Application-defined key-value data |\n| Scope | A single thread | Across threads |\n| Memory type | Short-term, thread-scoped memory | Long-term, cross-thread memory |\n| Use for | Conversation continuity, human-in-the-loop, time travel, and fault tolerance | User preferences, facts, and shared knowledge |\n| Access pattern | Pass a `thread_id` in graph config | Read and write items from nodes or application code |\n| Full guide | [Checkpointers](/oss/langgraph/checkpointers) | [Stores](/oss/langgraph/stores) |",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.7000000000000001,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.9166666666666666,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q026",
+      "input": "How do I implement a message limit for my agent conversation?",
+      "answer": "\n\nYou can implement a message limit for your agent conversation by using the `ToolCallLimitMiddleware` class. This middleware allows you to control the number of tool calls, either globally across all tools or for specific tools. \n\nTo implement a message limit, you can specify the `thread_limit` or `run_limit` parameter when creating an instance of `ToolCallLimitMiddleware`. The `thread_limit` parameter sets the maximum number of tool calls across all runs in a conversation, while the `run_limit` parameter sets the maximum number of tool calls per single invocation (one user message → response cycle).\n\nHere is an example of how to use `ToolCallLimitMiddleware` to implement a message limit:\n\n```python\nfrom langchain.agents import create_agent\nfrom langchain.agents.middleware import ToolCallLimitMiddleware\n\nglobal_limiter = ToolCallLimitMiddleware(thread_limit=20, run_limit=10)\nagent = create_agent(\n    model=\"gpt-5.5\",\n    tools=[search_tool, database_tool],\n    middleware=[global_limiter],\n)\n```\n\nYou can also specify a tool-specific limit by passing the `tool_name` parameter to `ToolCallLimitMiddleware`. For example:\n\n```python\nsearch_limiter = ToolCallLimitMiddleware(tool_name=\"search\", thread_limit=5, run_limit=3)\nagent = create_agent(\n    model=\"gpt-5.5\",\n    tools=[search_tool, database_tool],\n    middleware=[search_limiter],\n)\n```\n\nNote that at least one of `thread_limit` or `run_limit` must be specified when creating an instance of `ToolCallLimitMiddleware`.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.9166666666666666,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q027",
+      "input": "Can I use content blocks with any LLM provider?",
+      "answer": "\n\nYou can use content blocks with any LLM provider that is supported by LangChain, but you need to check the provider's documentation for specific support and usage guidelines. LangChain provides a standard representation for message content that works across providers, but each provider may have its own specific implementation and requirements. \n\n[S4]",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q028",
+      "input": "How do I convert MCP tools to LangChain tools in the new version?",
+      "answer": "\n\nYou can convert MCP tools to LangChain tools using the `as_langchain_tool` coroutine, which is a coroutine: `await as_langchain_tool(tool, client)`. This is the replacement for the `convert_mcp_tool_to_langchain_tool` function, which is now deprecated.\n\n```python\nawait as_langchain_tool(tool, client)\n```\n\nNote that the `langchain.mcp` namespace requires `langchain[mcp]>=1.4.0` and is in beta, so the API may change.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q029",
+      "input": "How do I build a simple chatbot that remembers previous messages?",
+      "answer": "\n\nYou can build a simple chatbot that remembers previous messages by using the functional API and the `InMemorySaver` checkpointer. \n\n```python\nfrom langchain_core.messages import BaseMessage\nfrom langgraph.graph import add_messages\nfrom langgraph.func import entrypoint, task\nfrom langgraph.checkpoint.memory import InMemorySaver\nfrom langchain_anthropic import ChatAnthropic\n\nmodel = ChatAnthropic(model=\"claude-3-5-sonnet-latest\")\n\n@task\ndef call_model(messages: list[BaseMessage]):\n    response = model.invoke(messages)\n    return response\n\ncheckpointer = InMemorySaver()\n\n@entrypoint(checkpointer=checkpointer)\ndef workflow(inputs: list[BaseMessage], *, previous: list[BaseMessage]):\n    if previous:\n        inputs = add_messages(previous, inputs)\n\n    response = call_model(inputs).result()\n    return entrypoint.final(value=response, save=add_messages(inputs, response))\n```\n\nSee the [Chatbot example](./chatbot.md) for more information.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q030",
+      "input": "What are the pros and cons of speech-to-speech architecture for voice agents?",
+      "answer": "\n\nSpeech-to-speech architecture for voice agents has the following pros and cons:\n\n* Pros:\n  - Simpler architecture with fewer moving parts\n  - Typically lower latency for simple interactions\n  - Direct audio processing captures tone and other nuances of speech\n* Cons:\n  - Limited model options, greater risk of provider lock-in\n  - Features may lag behind text-modality models\n  - Less transparency in how audio is processed\n  - Reduced controllability and customization options\n\n```mermaid\nflowchart LR\n    A[User Audio] --> B[Multimodal Model]\n    B --> C[Audio Output]\n\n    classDef trigger fill:#F6FFDB,stroke:#6E8900,stroke-width:2px,color:#2E3900\n    classDef process fill:#E5F4FF,stroke:#006DDD,stroke-width:2px,color:#030710\n\n    class A,C trigger\n    class B process\n```\n\nThis guide demonstrates the sandwich architecture to balance performance, controllability, and access to modern model capabilities.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8888888888888888,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q031",
+      "input": "My agent works fine in testing but loses context in production with multiple users—what's wrong?",
+      "answer": "\n\nThe issue you're experiencing is likely due to the lack of proper context engineering, which is providing the right information and tools in the right format so the LLM can accomplish a task. In production, with multiple users, the context window is limited, and you need patterns to selectively surface relevant information. This is where multi-agent patterns come in, which allow you to provide specialized knowledge without overwhelming the model's context window.\n\nTo fix this issue, you need to implement context engineering and use multi-agent patterns to manage context effectively. This involves deciding what information each agent sees and ensuring each agent has access to the right data for its task. You can use LangChain's agent abstractions to facilitate context engineering and manage context effectively.\n\n```python\n# Example of context engineering and multi-agent pattern\nfrom langchain.agents import create_agent\nfrom langgraph.types import Command\n\n# Create an agent with context engineering\nagent = create_agent(\n    model=model,\n    tools=[fetch_text_from_url],\n    system_prompt=SYSTEM_PROMPT,\n    checkpointer=checkpointer,\n)\n\n# Define a handoff tool to transfer context between agents\n@tool\ndef transfer_to_sales(\n    runtime: ToolRuntime,\n) -> Command:\n    \"\"\"Transfer to the sales agent.\"\"\"\n    last_ai_message = next(\n        msg for msg in reversed(runtime.state[\"messages\"]) if isinstance(msg, AIMessage)\n    )\n    transfer_message = ToolMessage(\n        content=\"Transferred to sales agent\",\n        tool_call_id=runtime.tool_call_id,\n    )\n    return Command(\n        goto=\"sales_agent\",\n        update={\n            \"active_agent\": \"sales_agent\",\n            \"messages\": [last_ai_message, transfer_message],\n        },\n        graph=Command.PARENT\n    )\n```\n\nNote: This is an assembled code snippet from multiple retrieved code fragments.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8875,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q032",
+      "input": "How do I stop my ReAct agent from going into infinite tool-calling loops?",
+      "answer": "\n\nTo stop your ReAct agent from going into infinite tool-calling loops, you can set a recursion limit using the `recursion_limit` parameter. This defines the maximum number of steps the agent can take before raising a `GraphRecursionError`. You can configure `recursion_limit` at runtime or when defining the agent via `.with_config()`.\n \n```python\nfrom langgraph.errors import GraphRecursionError\nfrom langgraph.prebuilt import create_react_agent\n\nmax_iterations = 3\nrecursion_limit = 2 * max_iterations + 1\nagent = create_react_agent(\n    model=\"anthropic:claude-3-5-haiku-latest\",\n    tools=[get_weather]\n)\n\ntry:\n    response = agent.invoke(\n        {\"messages\": [{\"role\": \"user\", \"content\": \"what's the weather in sf\"}]},\n        {\"recursion_limit\": recursion_limit},\n    )\nexcept GraphRecursionError:\n    print(\"Agent stopped due to max iterations.\")\n```\n\nAlternatively, you can use `.with_config()` to set the recursion limit when defining the agent.\n\n```python\nfrom langgraph.errors import GraphRecursionError\nfrom langgraph.prebuilt import create_react_agent\n\nmax_iterations = 3\nrecursion_limit = 2 * max_iterations + 1\nagent = create_react_agent(\n    model=\"anthropic:claude-3-5-haiku-latest\",\n    tools=[get_weather]\n)\nagent_with_recursion_limit = agent.with_config(recursion_limit=recursion_limit)\n\ntry:\n    response = agent_with_recursion_limit.invoke(\n        {\"messages\": [{\"role\": \"user\", \"content\": \"what's the weather in sf\"}]},\n    )\nexcept GraphRecursionError:\n    print(\"Agent stopped due to max iterations.\")\n```\n\nYou can also mark the tool with `return_direct=True` to end the loop after execution, or set `recursion_limit` to restrict the number of execution steps.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.41666666666666663,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q033",
+      "input": "Can I use LangChain with local LLMs like Ollama or llama.cpp?",
+      "answer": "\n\nYes, you can use LangChain with local LLMs like Ollama or llama.cpp. [S1] mentions that LangChain supports running models locally on your own hardware, and [S3] shows an example of using `stream_mode=\"custom\"` to stream data from any LLM API, including local models.\n\n```python\nfrom langgraph.config import get_stream_writer\n\ndef call_arbitrary_model(state):\n    # Get the stream writer to send custom data\n    writer = get_stream_writer()  # [!code highlight]\n    # Assume you have a streaming client that yields chunks\n    # Generate LLM tokens using your custom streaming client\n    for chunk in your_custom_streaming_client(state[\"topic\"]):\n        # Use the writer to send custom data to the stream\n        writer({\"custom_llm_chunk\": chunk})  # [!code highlight]\n    return {\"result\": \"completed\"}\n```\n\nYou can use this approach to integrate your local LLMs, such as Ollama or llama.cpp, with LangChain.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8055555555555555,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q034",
+      "input": "What's the best way to handle rate limits when calling OpenAI from my chain?",
+      "answer": "\n\nYou can use the built-in `InMemoryRateLimiter` from LangChain to regulate the frequency of requests sent to the model. This limiter is thread-safe and can be shared by multiple threads in the same process.\n\n```python\nfrom langchain_core.rate_limiters import InMemoryRateLimiter\nfrom langchain_anthropic import ChatAnthropic\n\nrate_limiter = InMemoryRateLimiter(\n    requests_per_second=0.1,  # 1 request every 10s\n    check_every_n_seconds=0.1,  # Check every 100ms whether allowed to make a request\n    max_bucket_size=10,  # Controls the maximum burst size.\n)\n\nmodel = ChatAnthropic(\n   model_name=\"claude-3-opus-20240229\",\n   rate_limiter=rate_limiter\n)\n```\n\nSee the LangChain docs for more information on how to handle rate limiting: https://python.langchain.com/docs/how_to/chat_model_rate_limiting/.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8571428571428571,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q035",
+      "input": "How do I stream just the final answer from my RAG chain, not the intermediate steps?",
+      "answer": "\n\nYou can use the `return_direct` parameter on a tool to short-circuit the agent loop and return the tool's output as the final response, bypassing any additional model call. Set `return_direct=True` on the tool to achieve this.\n\n```python\n# Example from [S4]\n# Set return direct on a tool to short-circuit the agent loop\ntool = {\n    'name': 'lookup_tool',\n    'return_direct': True\n}\n```\n\nThis will return the tool's output as the final response, without sending it back through the model for further processing.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.3333333333333333,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q036",
+      "input": "My vector search returns results but they're not relevant—how do I improve this?",
+      "answer": "\n\nYou can improve the relevance of your vector search results by adjusting the `search_kwargs` when creating a `VectorStoreRetriever`. For example, you can try increasing or decreasing the `k` parameter to change the number of results returned, or experiment with different `similarity` metrics. \n\n```python\nretriever = vector_store.as_retriever(\n    search_type=\"similarity\",\n    search_kwargs={\"k\": 5},  # Change the number of results returned\n)\n\nretriever.batch(\n    [\n        \"How many distribution centers does Nike have in the US?\",\n        \"When was Nike incorporated?\",\n    ],\n)\n```\n\nYou can also try using the `mmr` search type, which balances similarity with diversity, or the `similarity_score_threshold` search type to filter documents by similarity score.\n\n```python\nretriever = vector_store.as_retriever(\n    search_type=\"mmr\",\n    search_kwargs={\"k\": 5},\n)\n\nretriever.batch(\n    [\n        \"How many distribution centers does Nike have in the US?\",\n        \"When was Nike incorporated?\",\n    ],\n)\n```\n\nOr:\n\n```python\nretriever = vector_store.as_retriever(\n    search_type=\"similarity_score_threshold\",\n    search_kwargs={\"k\": 5, \"threshold\": 0.7},\n)\n\nretriever.batch(\n    [\n        \"How many distribution centers does Nike have in the US?\",\n        \"When was Nike incorporated?\",\n    ],\n)\n```\n\nNote that the optimal settings will depend on your specific use case and data.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.25,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q037",
+      "input": "Can I run multiple tools in parallel in my LangGraph agent?",
+      "answer": "\n\nYes, you can run multiple tools in parallel in your LangGraph agent. This is achieved through the use of the `parallelization` feature, which is enabled by the `Send` API [S1]. You can also use the `supervisor` agent to dispatch tasks to subagents sequentially or in parallel [S4]. \n\n```python\nparallel_builder = StateGraph(State)\nparallel_builder.add_node(\"tool1\", tool1)\nparallel_builder.add_node(\"tool2\", tool2)\nparallel_builder.add_edge(START, \"tool1\")\nparallel_builder.add_edge(START, \"tool2\")\nparallel_workflow = parallel_builder.compile()\n```\n\nOr, using the functional API:\n\n```python\n@task\ndef tool1():\n    # tool1 code here\n\n@task\ndef tool2():\n    # tool2 code here\n\n@entrypoint()\ndef parallel_workflow():\n    tool1_fut = tool1()\n    tool2_fut = tool2()\n    return tool1_fut.result(), tool2_fut.result()\n```\n\nNote that the supervisor agent can also be configured to execute tool calls in parallel by default [S4].",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8333333333333333,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q038",
+      "input": "How do I add a system prompt to my create_agent?",
+      "answer": "\n\nYou can add a system prompt to your `create_agent` by passing the `system_prompt` parameter. \n\n```python\nagent = create_agent(\n    model=\"claude-sonnet-4-6\",\n    tools=[check_weather],\n    system_prompt=\"You are a helpful assistant\"\n)\n```\n\nThis will set the system prompt to \"You are a helpful assistant\". \n\nNote: The `system_prompt` parameter has been renamed from `prompt` in newer versions of the library. If you're using an older version, you should use `prompt` instead.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.7000000000000001,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.3333333333333333,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q039",
+      "input": "What's the difference between invoke, stream, and batch in LCEL?",
+      "answer": "\n\n`invoke`, `stream`, and `batch` are three distinct methods in LCEL (LangChain Execution Layer) that serve different purposes.\n\n`invoke` returns the final response at the end of a run, whereas `stream` returns an iterator that yields output chunks as they are produced, allowing for real-time updates and progress tracking. `batch` parallelizes model calls client-side, improving performance and reducing costs by processing multiple requests in parallel.\n\nHere is the relevant code snippet:\n\n```python\n# invoke returns the final response\nresponse = model.invoke(\"What is the capital of France?\")\n\n# stream returns an iterator that yields output chunks\nfor chunk in model.stream(\"What is the capital of France?\"):\n    print(chunk.text)\n\n# batch parallelizes model calls client-side\nresponses = model.batch([\n    \"Why do parrots have colorful feathers?\",\n    \"How do airplanes fly?\",\n    \"What is quantum computing?\"\n])\nfor response in responses:\n    print(response)\n```\n\nNote that `batch` has two variants: `batch` and `batch_as_completed`, which returns the output for each individual input as it finishes generating.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8041666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8333333333333334,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q040",
+      "input": "How do I save and load my LangGraph checkpoint to disk?",
+      "answer": "\n\nYou must specify a checkpointer in the `compile()` method of your StateGraph. LangGraph provides an `InMemorySaver` checkpointer that stores checkpoints in memory, but you can use other checkpointer implementations to save checkpoints to disk. For example, you can use the `DiskSaver` checkpointer to save checkpoints to disk.\n\n```python\nfrom langgraph.checkpoint.disk import DiskSaver\nfrom langgraph.graph import StateGraph, START, END\n\n# Create a DiskSaver checkpointer\ncheckpointer = DiskSaver(\"/path/to/checkpoints\")\n\n# Compile the graph with the DiskSaver checkpointer\nworkflow = StateGraph(State)\nworkflow.add_node(node_a)\nworkflow.add_node(node_b)\nworkflow.add_edge(START, \"node_a\")\nworkflow.add_edge(\"node_a\", \"node_b\")\nworkflow.add_edge(\"node_b\", END)\nworkflow.compile(checkpointer=checkpointer)\n\n# Invoke the graph\nconfig: RunnableConfig = {\"configurable\": {\"thread_id\": \"1\"}}\ngraph.invoke({\"foo\": \"\", \"bar\":[]}, config)\n```\n\nNote that you need to specify the path to the directory where you want to save the checkpoints. The `DiskSaver` checkpointer will save checkpoints to this directory.\n\nTo load a saved checkpoint, you can use the `load_checkpoint()` method of the checkpointer. For example:\n\n```python\n# Load a saved checkpoint\ncheckpointer.load_checkpoint(\"/path/to/checkpoint\")\n```\n\nThis will load the checkpoint from the specified path and restore the state of the graph.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.2,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8888888888888888,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q041",
+      "input": "My tool is returning 'ToolMessage content must be a string' error—how do I fix this?",
+      "answer": "\n\nThe error \"ToolMessage content must be a string\" occurs when the `tool_message_content` parameter is not a string. To fix this, ensure that the `tool_message_content` parameter is a string. \n\n```python\nfrom pydantic import BaseModel, Field\nfrom typing import Literal\nfrom langchain.agents import create_agent\nfrom langchain.agents.structured_output import ToolStrategy\n\nclass MeetingAction(BaseModel):\n    \"\"\"Action items extracted from a meeting transcript.\"\"\"\n    task: str = Field(description=\"The specific task to be completed\")\n    assignee: str = Field(description=\"Person responsible for the task\")\n    priority: Literal[\"low\", \"medium\", \"high\"] = Field(description=\"Priority level\")\n\nagent = create_agent(\n    model=\"gpt-5.5\",\n    tools=[],\n    response_format=ToolStrategy(\n        schema=MeetingAction,\n        tool_message_content=\"Action item captured and added to meeting notes!\"  # <--- Ensure this is a string\n    )\n)\n```\n\nNote that the `tool_message_content` parameter should be a string, not a dictionary or any other type.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.4,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q042",
+      "input": "Can I use LangChain with Azure OpenAI instead of regular OpenAI?",
+      "answer": "\n\nYou can use LangChain with Azure OpenAI. To do so, you need to set the `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, and `AZURE_OPENAI_DEPLOYMENT_NAME` environment variables. \n\n```bash\nexport AZURE_OPENAI_API_KEY=\"your-api-key\"\nexport AZURE_OPENAI_ENDPOINT=\"https://your-resource.openai.azure.com\"\nexport AZURE_OPENAI_DEPLOYMENT_NAME=\"your-deployment\"\n```\n\nYou can also use a `.env` file to load these variables. \n\n```bash\nAZURE_OPENAI_API_KEY=your-api-key\nAZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com\nAZURE_OPENAI_DEPLOYMENT_NAME=your-deployment\n```\n\nThen, you can use the Azure OpenAI model in LangChain as you would with the regular OpenAI model.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.2,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q043",
+      "input": "How do I implement a router that sends questions to different specialized agents?",
+      "answer": "\n\nYou can implement a router that sends questions to different specialized agents by using the `route_to_agents` function, which fans out to agents based on classifications. This function returns a list of `Send` objects, where each `Send` object contains the agent to be invoked and the sub-question to be asked.\n\n```python\ndef route_to_agents(state: RouterState) -> list[Send]:\n    \"\"\"Fan out to agents based on classifications.\"\"\"\n    return [\n        Send(c[\"source\"], {\"query\": c[\"query\"]})  # [!code highlight]\n        for c in state[\"classifications\"]\n    ]\n```\n\nThis function is used in the `synthesize_results` function to send the sub-questions to the relevant agents in parallel.\n\n```python\ndef synthesize_results(state: RouterState) -> dict:\n    \"\"\"Combine results from all agents into a coherent answer.\"\"\"\n    # ...\n    agents = route_to_agents(state)\n    results = []\n    for agent in agents:\n        # Send the sub-question to the agent and collect the result\n        result = query_agent(agent)\n        results.append(result)\n    # ...\n```\n\nNote that the `query_agent` function is not shown in the provided code, but it is assumed to be a function that sends a question to an agent and returns the result.",
+      "success": false,
+      "has_error": true,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": null,
+          "passed": false,
+          "error": "Timed out/cancelled while evaluating metric. Increase DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE or set DEEPEVAL_LOG_STACK_TRACES=1 for full traceback."
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": null,
+          "passed": false,
+          "error": "Timed out/cancelled while evaluating metric. Increase DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE or set DEEPEVAL_LOG_STACK_TRACES=1 for full traceback."
+        }
+      ]
+    },
+    {
+      "id": "q044",
+      "input": "What's the proper way to handle API keys without hardcoding them?",
+      "answer": "\n\nYou should set API keys in your shell or in a `.env` file. To load a `.env` file, use `python-dotenv` (`load_dotenv()`). \n\n```python\nimport os\nimport pytest\nfrom dotenv import load_dotenv\n\nload_dotenv()\n```\n\n```bash\nexport OPENAI_API_KEY=\"your-api-key\"\n```\n\n```bash\nOPENAI_API_KEY=your-api-key\n```\n\nAdd `.env` to your `.gitignore` to avoid committing credentials. In CI, inject secrets through your provider's secrets management.",
+      "success": false,
+      "has_error": true,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": null,
+          "passed": false,
+          "error": "Timed out/cancelled while evaluating metric. Increase DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE or set DEEPEVAL_LOG_STACK_TRACES=1 for full traceback."
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": null,
+          "passed": false,
+          "error": "Timed out/cancelled while evaluating metric. Increase DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE or set DEEPEVAL_LOG_STACK_TRACES=1 for full traceback."
+        }
+      ]
+    }
+  ]
+}

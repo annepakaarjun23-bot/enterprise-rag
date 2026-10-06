@@ -1,0 +1,719 @@
+{
+  "run": "e2e_hybrid_automergeTrue_rerankFalse_k5_gpt-4o-mini_20261005_1311",
+  "config": {
+    "mode": "hybrid",
+    "automerge": true,
+    "rerank": false,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "max_concurrent": 2,
+    "gen_concurrency": 4
+  },
+  "timing": {
+    "retrieve_s": 25.5,
+    "generate_s": 40.0,
+    "judge_s": 653.7
+  },
+  "summary": {
+    "questions": 20,
+    "passed_all_metrics": 9,
+    "metrics": {
+      "Contextual Precision": {
+        "avg_score": 0.93,
+        "passed": 18,
+        "total": 20
+      },
+      "Contextual Recall": {
+        "avg_score": 0.927,
+        "passed": 18,
+        "total": 20
+      },
+      "Faithfulness": {
+        "avg_score": 0.827,
+        "passed": 15,
+        "total": 20
+      },
+      "Answer Relevancy": {
+        "avg_score": 0.868,
+        "passed": 16,
+        "total": 20
+      }
+    },
+    "errored_ids": [],
+    "failed_ids": [
+      "q011",
+      "q017",
+      "q019",
+      "q020",
+      "q021",
+      "q022",
+      "q023",
+      "q024",
+      "q025",
+      "q028",
+      "q030"
+    ]
+  },
+  "rows": [
+    {
+      "id": "q011",
+      "input": "What happened to the prompted output option in create_agent?",
+      "answer": "\n\nPrompted output is no longer supported via the `response_format` argument in `create_agent`. Compared to strategies like artificial tool calling and provider native structured output, prompted output has not proven to be particularly reliable.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "input": "How do I run evals and track them in LangSmith?",
+      "answer": "\n\nYou can run evals and track them in LangSmith by setting the required environment variables and using either the pytest integration or the `evaluate` function. To set the environment variables, use the following commands:\n\n```bash\nexport LANGSMITH_API_KEY=\"your_langsmith_api_key\"\nexport LANGSMITH_TRACING=\"true\"\n```\n\nOr, in Python:\n\n```python\nimport getpass\nimport os\n\nos.environ[\"LANGSMITH_TRACING\"] = \"true\"\nos.environ[\"LANGSMITH_API_KEY\"] = getpass.getpass()\n```\n\nYou can then use the `evaluate` function to run evals and track them in LangSmith. For example:\n\n```python\nfrom langsmith import Client\nfrom agentevals.trajectory.llm import create_trajectory_llm_as_judge, TRAJECTORY_ACCURACY_PROMPT\n\nclient = Client()\n\ntrajectory_evaluator = create_trajectory_llm_as_judge(\n    model=\"openai:o3-mini\",\n    prompt=TRAJECTORY_ACCURACY_PROMPT,\n)\n\ndef run_agent(inputs):\n    return agent.invoke(inputs)[\"messages\"]\n\nexperiment_results = client.evaluate(\n    run_agent,\n    data=\"your_dataset_name\",\n    evaluators=[trajectory_evaluator]\n)\n```\n\nNote: Make sure to replace `your_langsmith_api_key` and `your_dataset_name` with your actual LangSmith API key and dataset name.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q013",
+      "input": "Can I have private state in a subgraph that's hidden from the parent?",
+      "answer": "\n\nYou can have private state in a subgraph that's hidden from the parent graph by defining a subgraph with a different state schema that doesn't share any keys with the parent graph state schema. \n\n```python\nclass SubgraphState(TypedDict):\n    bar: str  # private to the subgraph\n    baz: str  # private to the subgraph\n```\n\nIn this case, you need to define a node function in the parent graph that invokes the subgraph, transforms the input state to the subgraph state, and transforms the response back to the parent state.\n\n```python\ndef node_2(state: ParentState):\n    response = subgraph.invoke({\"bar\": state[\"foo\"]})\n    return {\"foo\": response[\"baz\"]}\n```\n\nThis way, the parent graph doesn't have access to the `bar` and `baz` keys in the subgraph state.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q014",
+      "input": "How do I add retry logic around model calls in my agent?",
+      "answer": "\n\nYou can add retry logic around model calls in your agent by using the `ModelRetryMiddleware` class from the `langchain.agents.middleware` module. \n\n```python\nfrom langchain.agents.middleware import ModelRetryMiddleware\n\n# Basic usage with default settings (2 retries, exponential backoff)\nagent = create_agent(\n    model=\"gpt-5.5\",\n    tools=[search_tool],\n    middleware=[ModelRetryMiddleware()],\n)\n```\n\nYou can also customize the retry behavior by passing in specific exception types to retry on, a callable that takes an exception and returns `True` if it should be retried, or a custom error message formatting function.\n\n```python\n# Custom exception filtering\nclass TimeoutError(Exception):\n    \"\"\"Custom exception for timeout errors.\"\"\"\n    pass\n\nclass ConnectionError(Exception):\n    \"\"\"Custom exception for connection errors.\"\"\"\n    pass\n\n# Retry specific exceptions only\nretry = ModelRetryMiddleware(\n    max_retries=4,\n    retry_on=(TimeoutError, ConnectionError),\n    backoff_factor=1.5,\n)\n\n# Return error message instead of raising\nretry_continue = ModelRetryMiddleware(\n    max_retries=4,\n    on_failure=\"continue\",  # Return AIMessage with error instead of raising\n)\n\n# Custom error message formatting\ndef format_error(error: Exception) -> str:\n    return f\"Model call failed: {error}. Please try again later.\"\n\nretry_with_formatter = ModelRetryMiddleware(\n    max_retries=4,\n    on_failure=format_error,\n)\n```\n\nNote that the `ModelRetryMiddleware` class automatically retries failed model calls with exponential backoff.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.9,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q015",
+      "input": "What's the difference between node-style and wrap-style hooks in middleware?",
+      "answer": "\n\nNode-style hooks run at specific execution points (before agent starts, before each model call, after each model response, after agent completes) and return a dict directly, which is applied to the agent state using the graph's reducers. Wrap-style hooks, on the other hand, run around each call (model or tool) and return an `ExtendedModelResponse` with a `Command` to inject state updates alongside the model response, or a `Command` directly for tool calls.\n\n```python\nfrom langchain.agents.middleware import before_model, after_model, AgentState\nfrom langchain.messages import AIMessage\nfrom langgraph.runtime import Runtime\nfrom typing import Any\n\n@before_model(can_jump_to=[\"end\"])\ndef check_message_limit(state: AgentState, runtime: Runtime) -> dict[str, Any] | None:\n    # ...\n\n@after_model\ndef log_response(state: AgentState, runtime: Runtime) -> dict[str, Any] | None:\n    # ...\n```\n\n```python\nfrom langchain.agents.middleware import wrap_model_call, ModelRequest, ModelResponse\nfrom typing import Callable\n\n@wrap_model_call\ndef retry_model(\n    request: ModelRequest,\n    handler: Callable[[ModelRequest], ModelResponse],\n) -> ModelResponse:\n    # ...\n```\n\nNote that wrap-style hooks are more powerful for complex middleware with multiple hooks or configuration.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.95,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.8571428571428571,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q016",
+      "input": "How do I update agent state from middleware?",
+      "answer": "\n\nYou can update agent state from middleware by using the `state` attribute of the `AgentMiddleware` class. This attribute is an instance of `AgentState`, which is a dataclass that represents the state of the agent. You can update the state by modifying the attributes of this dataclass.\n\nHere is an example from the context [S4] where the `apply_step_config` middleware updates the `current_step` attribute of the state:\n\n```python\n@wrap_model_call  # [!code highlight]\ndef apply_step_config(\n    request: ModelRequest,\n    handler: Callable[[ModelRequest], ModelResponse]\n) -> ModelResponse:\n    \"\"\"Configure agent behavior based on current_step.\"\"\"\n    step = request.state.get(\"current_step\", \"triage\")  # [!code highlight]\n\n    # Map steps to their configurations\n    configs = {\n        \"triage\": {\n            \"prompt\": \"Collect warranty information...\",\n            \"tools\": [record_warranty_status]\n        },\n        \"specialist\": {\n            \"prompt\": \"Provide solutions based on warranty: {warranty_status}\",\n            \"tools\": [provide_solution, escalate]\n        }\n    }\n\n    config = configs[step]\n    request = request.override(  # [!code highlight]\n        system_prompt=config[\"prompt\"].format(**request.state),  # [!code highlight]\n        tools=config[\"tools\"]  # [!code highlight]\n    )\n    return handler(request)\n```\n\nIn this example, the `apply_step_config` middleware updates the `current_step` attribute of the state by setting it to `\"specialist\"` when the `record_warranty_status` tool is called.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.9230769230769231,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q017",
+      "input": "How do I implement human-in-the-loop to review tool calls before execution?",
+      "answer": "\n\nYou can implement human-in-the-loop review of tool calls by using the `interrupt` function in conjunction with the `HumanInTheLoopMiddleware` middleware. This allows you to pause the agent graph at a specific node and present the tool call to a human for review. The human can then approve, edit, or provide feedback on the tool call, which can be used to resume the graph.\n\nHere is an example of how to implement human-in-the-loop review:\n\n```python\nfrom langchain.agents import create_agent\nfrom langchain.agents.middleware import HumanInTheLoopMiddleware\nfrom langgraph.checkpoint.memory import InMemorySaver\n\ncalendar_agent = create_agent(\n    model,\n    tools=[create_calendar_event, get_available_time_slots],\n    system_prompt=CALENDAR_AGENT_PROMPT,\n    middleware=[\n        HumanInTheLoopMiddleware(\n            interrupt_on={\"create_calendar_event\": True},\n            description_prefix=\"Calendar event pending approval\",\n        ),\n    ],\n)\n\nemail_agent = create_agent(\n    model,\n    tools=[send_email],\n    system_prompt=EMAIL_AGENT_PROMPT,\n    middleware=[\n        HumanInTheLoopMiddleware(\n            interrupt_on={\"send_email\": True},\n            description_prefix=\"Outbound email pending approval\",\n        ),\n    ],\n)\n\nsupervisor_agent = create_agent(\n    model,\n    tools=[schedule_event, manage_email],\n    system_prompt=SUPERVISOR_PROMPT,\n    checkpointer=InMemorySaver(),\n)\n```\n\nYou can then invoke the graph as before, and execution will be interrupted at the tool call. You can then accept or edit the tool call using the `Command` object.\n\n```python\nquery = (\n    \"Schedule a meeting with the design team next Tuesday at 2pm for 1 hour, \"\n    \"and send them an email reminder about reviewing the new mockups.\"\n)\n\nconfig = {\"configurable\": {\"thread_id\": \"6\"}}\n\ninterrupts = []\nstream = supervisor_agent.stream_events(\n    {\"messages\": [{\"role\": \"user\", \"content\": query}]},\n    config,\n    version=\"v3\",\n)\nfor kind, item in stream.interleave(\"messages\", \"tool_calls\"):\n    if kind == \"messages\":\n        for token in item.text:\n            print(token, end=\"\", flush=True)\n    elif kind == \"tool_calls\":\n        print(f\"\\nTool call: {item.tool_name}({item.input})\")\nif stream.interrupted:\n    for interrupt_ in stream.interrupts:\n        interrupts.append(interrupt_)\n        print(f\"\\nINTERRUPTED: {interrupt_.id}\")\n```\n\nNote that you will need to replace the `interrupt_on` dictionary with the actual tool calls that you want to review.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.4782608695652174,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.7647058823529411,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q018",
+      "input": "How can I view the history of checkpoints for a thread?",
+      "answer": "\n\nYou can view the history of checkpoints for a thread by using the `list` method of the `checkpointer` object, passing in the thread configuration as an argument. \n\n```\nconfig = {\n    \"configurable\": {\n        \"thread_id\": \"1\"\n    }\n}\nlist(checkpointer.list(config))\n```\n\nNote that the `checkpointer` object and its methods are not explicitly defined in the provided context, so it is assumed that it is a valid object with a `list` method.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q019",
+      "input": "How do I return a different value to the caller than what I save to checkpoint?",
+      "answer": "\n\nYou can return a different value to the caller than what you save to checkpoint by using the `entrypoint.final` primitive. The `entrypoint.final` type annotation is `entrypoint.final[return_type, save_type]`, where the first value is the return value of the entrypoint and the second value is the value that will be saved in the checkpoint.\n\n```python\n@entrypoint(checkpointer=checkpointer)\ndef my_workflow(number: int, *, previous: Any = None) -> entrypoint.final[int, int]:\n    previous = previous or 0\n    # This will return the previous value to the caller, saving\n    # 2 * number to the checkpoint, which will be used in the next invocation\n    # for the `previous` parameter.\n    return entrypoint.final(value=previous, save=2 * number)\n```\n\nNote that this is useful when you want to return a computed result (e.g., a summary or status), but save a different internal value for use on the next invocation.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.875,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q020",
+      "input": "What changed with streaming node names in v1?",
+      "answer": "\n\nThe streaming node name changed from `\"agent\"` to `\"model\"` in v1 to better reflect the node's purpose.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q021",
+      "input": "How do I build a voice agent with sub-700ms latency?",
+      "answer": "\n\nTo build a voice agent with sub-700ms latency, you can use the sandwich architecture, which balances performance, controllability, and access to modern model capabilities. This architecture can achieve sub-700ms latency with some STT and TTS providers while maintaining control over modular components.\n\n(assembled from multiple retrieved snippets)\n\n```python\npipeline = (\n    RunnableGenerator(stt_stream)      # Audio → STT events\n    | RunnableGenerator(agent_stream)  # STT events → Agent events\n    | RunnableGenerator(tts_stream)    # Agent events → TTS audio\n)\n```\n\nNote that this requires using async generators to enable streaming at each stage, allowing downstream components to begin processing before upstream stages complete, minimizing end-to-end latency.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8666666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5714285714285714,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q022",
+      "input": "How do I enable LangSmith tracing for my application?",
+      "answer": "\n\nTo enable LangSmith tracing for your application, set the following environment variables:\n\n```python\nexport LANGSMITH_TRACING=true\nexport LANGSMITH_API_KEY=<your-api-key>\n```\n\nYou can also set them in Python:\n\n```python\nimport getpass\nimport os\n\nos.environ[\"LANGSMITH_TRACING\"] = \"true\"\nos.environ[\"LANGSMITH_API_KEY\"] = getpass.getpass()\n```\n\nNote that you need to replace `<your-api-key>` with your actual API key.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q023",
+      "input": "How do I handle state schema changes without breaking existing checkpoints?",
+      "answer": "\n\nWhen making state schema changes, you should be aware of the following:\n\n*   Renaming or removing a node will break existing checkpoints, as the node's name is used to identify it during deserialization.\n*   Renaming or removing a State key that older checkpoints still contain or that downstream nodes still read will also break existing checkpoints.\n*   Tightening a State field, such as making an `Optional` field required, narrowing a type, or adding a new required field with no default, will break existing checkpoints.\n\nTo handle state schema changes without breaking existing checkpoints, you should follow these guidelines:\n\n*   Avoid renaming or removing nodes, State keys, or tightening State fields that are used in existing checkpoints.\n*   If you need to make changes to the state schema, create a new version of the schema and update the nodes and edges to use the new schema.\n*   Use the `subgraphs` feature to encapsulate changes to the state schema, allowing you to update the schema without breaking existing checkpoints.\n\nHere is an example of how to use subgraphs to handle state schema changes:\n\n```python\n# Define the new state schema\nclass NewState(TypedDict):\n    my_new_key: str\n\n# Define the subgraph with the new state schema\nsubgraph = StateGraph(NewState)\nsubgraph.add_node(\"new_node\", (state) => { my_new_key: \"new value\" })\nsubgraph.add_edge(START, \"new_node\")\nsubgraph.add_edge(\"new_node\", END)\n\n# Update the parent graph to use the new subgraph\nclass ParentState(TypedDict):\n    my_key: str\n\ndef parent_1(state: ParentState) -> ParentState:\n    return {\"my_key\": \"hi \" + state[\"my_key\"]}\n\ndef call_subgraph(state: ParentState) -> ParentState:\n    subgraph_input = {\"my_new_key\": state[\"my_key\"]}\n    subgraph_output = subgraph.invoke(subgraph_input)\n    return {\"my_key\": subgraph_output[\"my_new_key\"]}\n\nparent = StateGraph(ParentState)\nparent.add_node(\"parent_1\", parent_1)\nparent.add_node(\"subgraph\", call_subgraph)\nparent.add_edge(START, \"parent_1\")\nparent.add_edge(\"parent_1\", \"subgraph\")\nparent.add_edge(\"subgraph\", END)\n```\n\nBy using subgraphs, you can update the state schema without breaking existing checkpoints.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5833333333333333,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q024",
+      "input": "How do I transfer control between agents in a multi-agent system?",
+      "answer": "\n\nYou can transfer control between agents in a multi-agent system using the `Send()` primitive, which describes which agent to hand control to and the payload to send to that agent. \n\n```python\nfrom langgraph.types import Command, Send\n\ndef handoff_tool(\n    # this is populated by the calling agent\n    task_description: Annotated[\n        str,\n        \"Description of what the next agent should do, including all of the relevant context.\",\n    ],\n    # these parameters are ignored by the LLM\n    state: Annotated[MessagesState, InjectedState],\n) -> Command:\n    task_description_message = {\"role\": \"user\", \"content\": task_description}\n    agent_input = {**state, \"messages\": [task_description_message]}\n    return Command(\n        # highlight-next-line\n        goto=[Send(agent_name, agent_input)],\n        graph=Command.PARENT,\n    )\n```\n\nThis is done by using the `Send()` primitive in the `goto` field of a `Command` object, as shown in the code snippet above.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8888888888888888,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q025",
+      "input": "What's the difference between checkpointers and stores?",
+      "answer": "\n\nCheckpointers persist graph state snapshots, providing short-term, thread-scoped memory for conversation continuity, human-in-the-loop, time travel, and fault tolerance. Stores, on the other hand, persist application-defined key-value data across threads, used for user preferences, facts, and shared knowledge.\n\n| | Checkpointer | Store |\n| ---- | ---- | ---- |\n| Persists | Graph state snapshots | Application-defined key-value data |\n| Scope | A single thread | Across threads |\n| Memory type | Short-term, thread-scoped memory | Long-term, cross-thread memory |\n| Use for | Conversation continuity, human-in-the-loop, time travel, and fault tolerance | User preferences, facts, and shared knowledge |\n| Access pattern | Pass a `thread_id` in graph config | Read and write items from nodes or application code |\n| Full guide | [Checkpointers](/oss/langgraph/checkpointers) | [Stores](/oss/langgraph/stores) |",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.7000000000000001,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.9230769230769231,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q026",
+      "input": "How do I implement a message limit for my agent conversation?",
+      "answer": "\n\nYou can implement a message limit for your agent conversation using the `ToolCallLimitMiddleware` class. This middleware allows you to control the number of tool calls, either globally across all tools or for specific tools.\n\nTo implement a message limit, you can specify the `thread_limit` and/or `run_limit` parameters when creating an instance of `ToolCallLimitMiddleware`. The `thread_limit` parameter sets the maximum number of tool calls across all runs in a conversation, while the `run_limit` parameter sets the maximum number of tool calls per single invocation (one user message → response cycle).\n\nHere's an example of how to use `ToolCallLimitMiddleware` to implement a message limit:\n\n```python\nfrom langchain.agents import create_agent\nfrom langchain.agents.middleware import ToolCallLimitMiddleware\n\nglobal_limiter = ToolCallLimitMiddleware(thread_limit=20, run_limit=10)\nagent = create_agent(\n    model=\"gpt-5.5\",\n    tools=[search_tool, database_tool],\n    middleware=[global_limiter],\n)\n```\n\nYou can also specify a tool-specific limit by passing the `tool_name` parameter to `ToolCallLimitMiddleware`. For example:\n\n```python\nsearch_limiter = ToolCallLimitMiddleware(tool_name=\"search\", thread_limit=5, run_limit=3)\nagent = create_agent(\n    model=\"gpt-5.5\",\n    tools=[search_tool, database_tool],\n    middleware=[search_limiter],\n)\n```\n\nNote that at least one of `thread_limit` or `run_limit` must be specified when creating an instance of `ToolCallLimitMiddleware`.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q027",
+      "input": "Can I use content blocks with any LLM provider?",
+      "answer": "\n\nYou can use content blocks with any LLM provider that is supported by LangChain, but you need to check the specific provider's documentation for compatibility and usage guidelines. LangChain provides a standard representation for message content that works across providers, but each provider may have its own specific implementation and requirements for content blocks.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q028",
+      "input": "How do I convert MCP tools to LangChain tools in the new version?",
+      "answer": "\n\nYou can convert MCP tools to LangChain tools using the `as_langchain_tool` coroutine, which is a renamed and updated version of the `convert_mcp_tool_to_langchain_tool` function. The new coroutine is called `as_langchain_tool(tool, client)`. \n\n```python\nawait as_langchain_tool(tool, client)\n```\n\nNote that the `langchain.mcp` namespace is in beta and the API may change.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q029",
+      "input": "How do I build a simple chatbot that remembers previous messages?",
+      "answer": "\n\nYou can build a simple chatbot that remembers previous messages by using the functional API and the `InMemorySaver` checkpointer. \n\n```python\nfrom langchain_core.messages import BaseMessage\nfrom langgraph.graph import add_messages\nfrom langgraph.func import entrypoint, task\nfrom langgraph.checkpoint.memory import InMemorySaver\nfrom langchain_anthropic import ChatAnthropic\n\nmodel = ChatAnthropic(model=\"claude-3-5-sonnet-latest\")\n\n@task\ndef call_model(messages: list[BaseMessage]):\n    response = model.invoke(messages)\n    return response\n\ncheckpointer = InMemorySaver()\n\n@entrypoint(checkpointer=checkpointer)\ndef workflow(inputs: list[BaseMessage], *, previous: list[BaseMessage]):\n    if previous:\n        inputs = add_messages(previous, inputs)\n\n    response = call_model(inputs).result()\n    return entrypoint.final(value=response, save=add_messages(inputs, response))\n```\n\nSee the [Chatbot example](./chatbot.md) for more information.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q030",
+      "input": "What are the pros and cons of speech-to-speech architecture for voice agents?",
+      "answer": "\n\nSpeech-to-speech architecture for voice agents has the following pros and cons:\n\n* Pros:\n  - Simpler architecture with fewer moving parts\n  - Typically lower latency for simple interactions\n  - Direct audio processing captures tone and other nuances of speech\n* Cons:\n  - Limited model options, greater risk of provider lock-in\n  - Features may lag behind text-modality models\n  - Less transparency in how audio is processed\n  - Reduced controllability and customization options\n\n```mermaid\nflowchart LR\n    A[User Audio] --> B[Multimodal Model]\n    B --> C[Audio Output]\n\n    classDef trigger fill:#F6FFDB,stroke:#6E8900,stroke-width:2px,color:#2E3900\n    classDef process fill:#E5F4FF,stroke:#006DDD,stroke-width:2px,color:#030710\n\n    class A,C trigger\n    class B process\n```\n\nThis guide demonstrates the sandwich architecture to balance performance, controllability, and access to modern model capabilities.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

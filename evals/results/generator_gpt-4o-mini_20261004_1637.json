@@ -1,0 +1,251 @@
+{
+  "run": "generator_gpt-4o-mini_20261004_1637",
+  "config": {
+    "judge_model": "openai/gpt-4o-mini",
+    "threshold": 0.7,
+    "max_concurrent": 2,
+    "gen_concurrency": 4
+  },
+  "timing": {
+    "generate_s": 9.6,
+    "judge_s": 99.5
+  },
+  "summary": {
+    "questions": 10,
+    "passed_all_metrics": 3,
+    "metrics": {
+      "Faithfulness": {
+        "avg_score": 0.875,
+        "passed": 8,
+        "total": 10
+      },
+      "Answer Relevancy": {
+        "avg_score": 0.652,
+        "passed": 3,
+        "total": 10
+      }
+    },
+    "errored_ids": [],
+    "failed_ids": [
+      "q002",
+      "q001",
+      "q003",
+      "q004",
+      "q005",
+      "q006",
+      "q008"
+    ]
+  },
+  "rows": [
+    {
+      "id": "q002",
+      "input": "What is the purpose of update and goto in LangGraph's Command?",
+      "answer": "\n\nThe update field in LangGraph's Command is used to specify a state update, and the goto field is used to specify the node to route to. [S2]\n\nThe retrieved documentation does not cover the specific use cases or scenarios where both update and goto are used together.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q001",
+      "input": "How do I add short-term memory to a LangGraph graph, and how is the conversation associated with a thread?",
+      "answer": "\n\nTo add short-term memory to a LangGraph graph, create a checkpointer and compile the graph with that checkpointer [S1]. The conversation is associated with a thread through the thread_id, which can be passed to graph.invoke [S2].\n\nThe retrieved documentation does not cover how to implement the checkpointer or what configuration options are available for thread_id.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "input": "If a LangGraph node only needs to choose the next node and does not need to update state, should it use Command?",
+      "answer": "\n\nNo. If you only need to route without updating state, use conditional edges instead [S2].",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "input": "How can a node inside a LangGraph subgraph navigate to a node in its parent graph?",
+      "answer": "\n\nTo navigate from a node within a subgraph to a different node in the parent graph, you can specify `graph=Command.PARENT in Command [S1]. \n\nThe retrieved documentation does not cover how to implement this navigation.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "input": "What happens if a LangGraph node returns Command(goto=...) while the graph also has a static edge from that same node?",
+      "answer": "\n\nYes, both the node specified by the Command(goto=...) and the node connected by the static edge will run. [S2]\n\nThe retrieved documentation does not cover the specific behavior when the Command(goto=...) is executed.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "input": "What does a reducer control in LangGraph state updates, and what happens when no reducer is defined?",
+      "answer": "\n\nA reducer controls how updates from nodes are applied to a key in the State [S1]. When no reducer function is explicitly specified, all updates to that key override the previous value [S2]. The retrieved documentation does not cover what happens when multiple updates are applied with a reducer defined.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "input": "How can I replace a state value completely when that state key normally uses a reducer?",
+      "answer": "\n\nYes, you can use the Overwrite type to bypass a reducer and directly overwrite a state value. To do this, return a value wrapped with Overwrite from a node, which will set the channel directly to that value, bypassing the reducer [S1][S2].",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "input": "Does LangGraph treat interrupt() as a normal error that is sent to an error handler or retry policy?",
+      "answer": "\n\nYes, LangGraph treats interrupt() as a normal error that is sent to an error handler or retry policy [S1]. This is because interrupt() is not routed to the error handler [S1]. Instead, interrupts use the GraphBubbleUp mechanism to pause graph execution for human-in-the-loop workflows, bypassing both retry policies and error handlers [S2].",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "input": "What are the three phases of a LangGraph Pregel execution step, and when do actors see channel updates?",
+      "answer": "\n\nThe three phases of a LangGraph Pregel execution step are Plan, Execution, and Update [S1][S2]. During Execution, channel updates are invisible to actors until the next step [S3].",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "input": "In LangChain, why would I use a retriever instead of calling a vector store directly, and what Runnable methods can a retriever support?",
+      "answer": "\n\nYou would use a retriever instead of calling a vector store directly because a retriever can wrap non-vector sources such as external APIs [S3]. A retriever, being a Runnable, supports standard methods such as synchronous and asynchronous invoke and batch [S2]. \n\nThe retrieved documentation does not cover the specific use cases where a vector store would be preferred over a retriever.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

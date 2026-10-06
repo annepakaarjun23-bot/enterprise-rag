@@ -1,0 +1,577 @@
+[
+  {
+    "id": "q001",
+    "input": "I keep getting an unknown model error when invoking the API—what steps should I take to resolve it?",
+    "expected_output": "First, ensure the model name you’re passing in matches exactly with no typos, and then verify any proxy or wrapper you use isn’t restricting or altering the allowed model identifiers.",
+    "source_docs": [
+      "langchain/errors/MODEL_NOT_FOUND.mdx"
+    ],
+    "expected_chunk_ids": [
+      "0750cd8ea3dd9190b755197c82379d6b"
+    ],
+    "library": "langchain",
+    "type": "simple"
+  },
+  {
+    "id": "q002",
+    "input": "Which context engineering category is responsible for supplying subagents with optimized information to improve their execution?",
+    "expected_output": "The subagent inputs category focuses on providing subagents with optimal context, enhancing their performance.",
+    "source_docs": [
+      "langchain/multi-agent/subagents.mdx"
+    ],
+    "expected_chunk_ids": [
+      "98b6b764a5dccdbcc7408e40cfc9d057"
+    ],
+    "library": "langchain",
+    "type": "simple"
+  },
+  {
+    "id": "q003",
+    "input": "How can I attach a progress callback when initializing a FastMCP client for use with MCPAdapter?",
+    "expected_output": "Provide your handler function via the progress_handler argument when creating the Client, for example: Client(\"https://example.com/mcp\", progress_handler=on_progress).",
+    "source_docs": [
+      "python/migrate/langchain-mcp-adapters.mdx"
+    ],
+    "expected_chunk_ids": [
+      "82fb3b36431aae49c2b7677700d07439"
+    ],
+    "library": "langchain",
+    "type": "simple"
+  },
+  {
+    "id": "q004",
+    "input": "What function should I import to enable streaming updates from within a tool implementation?",
+    "expected_output": "You should import get_stream_writer from langgraph.config.",
+    "source_docs": [
+      "how-tos/streaming.md"
+    ],
+    "expected_chunk_ids": [
+      "75854f3fe7b604a25d53c51b7fe0fd2b"
+    ],
+    "library": "langgraph",
+    "type": "simple"
+  },
+  {
+    "id": "q005",
+    "input": "I need to quickly prototype a straightforward sequence of tasks without overhauling my existing code. Which LangGraph interface should I pick?",
+    "expected_output": "The Functional API is best for quick prototyping of simple, sequential workflows with minimal changes to your existing code.",
+    "source_docs": [
+      "langgraph/choosing-apis.mdx"
+    ],
+    "expected_chunk_ids": [
+      "019b6723033b48124b8cd8e9b452ff4a"
+    ],
+    "library": "langgraph",
+    "type": "simple"
+  },
+  {
+    "id": "q006",
+    "input": "When creating a transfer tool without specifying a description, what description will it use?",
+    "expected_output": "It defaults to \"Transfer to {agent_name}\", substituting the provided agent name into the template.",
+    "source_docs": [
+      "how-tos/multi_agent.md"
+    ],
+    "expected_chunk_ids": [
+      "cdebc68ec25e2d2bc38ccaeb4256b874"
+    ],
+    "library": "langgraph",
+    "type": "simple"
+  },
+  {
+    "id": "q007",
+    "input": "How does the summarize_conversation function prune older messages after updating the summary?",
+    "expected_output": "It creates RemoveMessage commands for all but the two most recent messages in state[\"messages\"], removing older entries from the history.",
+    "source_docs": [
+      "how-tos/memory/add-memory.md"
+    ],
+    "expected_chunk_ids": [
+      "ecd1cf106395dfa85f8fdf6622bba03d"
+    ],
+    "library": "langgraph",
+    "type": "simple"
+  },
+  {
+    "id": "q008",
+    "input": "How does the call_model function retrieve the instructions before formatting its prompt?",
+    "expected_output": "It fetches the entry from the store under the namespace ('agent_instructions',) with key 'agent_a' and extracts its instructions field.",
+    "source_docs": [
+      "concepts/memory.md"
+    ],
+    "expected_chunk_ids": [
+      "de7719b58d97496244322c4c04ab1d8c"
+    ],
+    "library": "langgraph",
+    "type": "simple"
+  },
+  {
+    "id": "q009",
+    "input": "What can trigger a maximum steps reached error when compiling a LangGraph StateGraph?",
+    "expected_output": "It means the graph exceeded the default step limit—often because cyclical edges create an infinite loop, although complex graphs can also hit the limit.",
+    "source_docs": [
+      "langgraph/errors/GRAPH_RECURSION_LIMIT.mdx"
+    ],
+    "expected_chunk_ids": [
+      "13c6201cc702f6a30df1d9fcb0ccb351"
+    ],
+    "library": "langgraph",
+    "type": "simple"
+  },
+  {
+    "id": "q010",
+    "input": "How can I include environment variables from a local .env file in my configuration?",
+    "expected_output": "Specify the path to the .env file in the \"env\" field, for example \"./.env\".",
+    "source_docs": [
+      "concepts/application_structure.md"
+    ],
+    "expected_chunk_ids": [
+      "dbbcd10a51ab567b080a0115e05453dd"
+    ],
+    "library": "langgraph",
+    "type": "simple"
+  }
+  // {
+  //   "id": "q011",
+  //   "input": "Do I need an API key to connect to the public LangChain docs MCP server?",
+  //   "expected_output": "No, the docs MCP server is public and does not require an API key.",
+  //   "source_docs": [
+  //     "langchain/mcp/index.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "cad865b03ef4f8c4a2bacfc6c4bcf97c"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q012",
+  //   "input": "If completed messages aren’t showing up in state updates during a streaming call, how can I still retrieve them?",
+  //   "expected_output": "You can use custom updates to access completed messages directly from the agent internals during streaming, or collect and assemble the message chunks yourself in the streaming loop.",
+  //   "source_docs": [
+  //     "langchain/streaming.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "0219a0131f7c6edede3daefb61c5e14f"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q013",
+  //   "input": "How can I guarantee that an operation like random number generation produces the same outcome when a workflow is resumed?",
+  //   "expected_output": "Encapsulate the random number generation inside its own task or node so the workflow reuses the recorded result on resumption.",
+  //   "source_docs": [
+  //     "concepts/durable_execution.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "6884e5c3eb1039ef271370678d5c8bb4"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q014",
+  //   "input": "Which persistence system should I use to keep user preferences available across different threads and sessions?",
+  //   "expected_output": "Stores persist application-defined data outside the graph state and are used for long-term, cross-thread memory such as user preferences.",
+  //   "source_docs": [
+  //     "langgraph/persistence.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "d1175fbde57e3b75a603defade56f29a"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q015",
+  //   "input": "What setup step is necessary before making asynchronous requests with RemoteGraph?",
+  //   "expected_output": "You must supply either a URL or a client when initializing the RemoteGraph to enable async operations.",
+  //   "source_docs": [
+  //     "how-tos/use-remote-graph.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "d415e88611a956a941752bf03cbf1b4a"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q016",
+  //   "input": "How can the main agent avoid overloading its context when handling a large task?",
+  //   "expected_output": "By splitting the task into subagents that each run in their own isolated context, allowing parallel execution and keeping the main agent’s environment uncluttered.",
+  //   "source_docs": [
+  //     "langchain/agents.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "d2f85b8c9b3f99cf46270bde7fe2992f"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q017",
+  //   "input": "Which tool should I use to automatically break text into target-sized segments for general documents?",
+  //   "expected_output": "The RecursiveCharacterTextSplitter, which recursively splits on common separators until each chunk reaches the target size, is recommended for generic text use cases.",
+  //   "source_docs": [
+  //     "langchain/knowledge-base.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "33b297e9c4159ef4989eb5bf8485add3"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q018",
+  //   "input": "How do I set custom descriptions for the agent’s filesystem commands?",
+  //   "expected_output": "You can pass a custom_tool_descriptions dictionary to FilesystemMiddleware that maps each tool name to its desired description.",
+  //   "source_docs": [
+  //     "langchain/middleware/built-in.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "a9b4dd4eb617da78165b71e5fbe6eec9"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q019",
+  //   "input": "What fields are required when sending a tool_call request?",
+  //   "expected_output": "A tool_call JSON must specify type as \"tool_call\", include the tool’s name, an \"args\" object with its parameters, and a unique \"id\" for that call.",
+  //   "source_docs": [
+  //     "langchain/messages.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "73763b5a5437801a5ab1c1bb9964273b"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q020",
+  //   "input": "How can I identify the specific error type when LangGraph throws an error during execution?",
+  //   "expected_output": "Every error thrown includes an lc_error_code property that corresponds to one of the predefined error codes such as GRAPH_RECURSION_LIMIT or INVALID_CHAT_HISTORY.",
+  //   "source_docs": [
+  //     "troubleshooting/errors/index.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "647cddfe454baeb1a87472d4b559a1dd"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q021",
+  //   "input": "Can I resume a process at a previous checkpoint to try different options?",
+  //   "expected_output": "LangGraph lets you restart execution from an earlier checkpoint and modify it to explore different paths, creating a new fork in the execution history.",
+  //   "source_docs": [
+  //     "concepts/time-travel.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "6f01fb48d57170e13effdbb297391f96"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q022",
+  //   "input": "How should I pass user messages to invoke the graph so it begins at the initial step instead of hanging?",
+  //   "expected_output": "Send a plain input dictionary (for example {'messages': [...]}) to invoke, which restarts the execution at the initial node rather than resuming from the last checkpoint.",
+  //   "source_docs": [
+  //     "langgraph/graph-api.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "bffe9d49f5f234dceb189c5aa71c7df4"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q023",
+  //   "input": "What return type must my nodes use in a StateGraph to prevent an InvalidUpdateError?",
+  //   "expected_output": "Nodes in a StateGraph must return a dict containing one or more keys defined in your state.",
+  //   "source_docs": [
+  //     "langgraph/errors/INVALID_GRAPH_NODE_RETURN_VALUE.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "8a3364addd0611ace1a7ee1a259e0cb5"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q024",
+  //   "input": "Where can I find guidance on hiding specific messages in the agent chat interface?",
+  //   "expected_output": "In the Hiding Messages in the Chat section of the Agent Chat UI documentation on GitHub.",
+  //   "source_docs": [
+  //     "agents/ui.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "a320a9166473a6fa62f4efa9cc055832"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q025",
+  //   "input": "When setting up a Claude chat model with LangChain, how can I configure it to return the full response instead of streaming tokens?",
+  //   "expected_output": "Include the parameter disable_streaming=True when creating the model, either via init_chat_model or in the ChatAnthropic constructor.",
+  //   "source_docs": [
+  //     "agents/models.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "62350a2c8ad3c81a136fff272f0c358c"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q026",
+  //   "input": "How do I set up the agent to push incremental results while it runs?",
+  //   "expected_output": "Use agent.stream for synchronous calls or agent.astream for asynchronous calls with stream_mode set to \"updates\" to receive progress updates, tokens, and tool messages as they’re generated.",
+  //   "source_docs": [
+  //     "agents/run_agents.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "27295f122e47b3e50072d38f99318e39"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q027",
+  //   "input": "How does using a router cut down on wait times when accessing various data sources?",
+  //   "expected_output": "It queries multiple sources simultaneously, reducing latency compared to sequential approaches.",
+  //   "source_docs": [
+  //     "langchain/multi-agent/router-knowledge-base.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "6e3a131184f042dae793bf9554740198"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q028",
+  //   "input": "Which middleware method can be used to filter the tools passed to the model according to the agent’s context?",
+  //   "expected_output": "You override the wrap_model_call method in a subclass of AgentMiddleware to select and pass a relevant subset of tools before invoking the handler.",
+  //   "source_docs": [
+  //     "langchain/middleware/custom.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "5c6740a1a92ea71c3328445e1429e81d"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q029",
+  //   "input": "How can I disable checkpointing entirely when compiling a subgraph?",
+  //   "expected_output": "Call compile with checkpointer=False, for example: subgraph = subgraph_builder.compile(checkpointer=False).",
+  //   "source_docs": [
+  //     "langgraph/errors/MULTIPLE_SUBGRAPHS.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "f973b825436c477f745fb3690ba50ce9"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q030",
+  //   "input": "What structure should my evaluation dataset have to use the prebuilt AgentEvals evaluators?",
+  //   "expected_output": "Each record should have an input field with a messages array for invoking the agent and an output field with a messages array representing the expected message history.",
+  //   "source_docs": [
+  //     "agents/evals.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "6b0fc723629b8dad86508cdd5bf42ab3"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "simple"
+  // },
+  // {
+  //   "id": "q031",
+  //   "input": "What steps are needed to integrate a specialized worker agent into a main agent, and what options are available for how the main agent dispatches work to its subagents?",
+  //   "expected_output": "You decorate the worker agent’s invoke function as a tool and include it in the main agent’s tools list when creating the main agent; you can then choose between giving each subagent its own tool or using a single-dispatch tool to route tasks.",
+  //   "source_docs": [
+  //     "langchain/multi-agent/subagents.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "e35459090cfd91ec84f87ddcefe93bb4",
+  //     "ccdea71bdae70e2370181093304671a8"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q032",
+  //   "input": "How can I apply custom logic to every tool execution to examine MCP provenance, and in what form are errors from MCP tools surfaced to the model?",
+  //   "expected_output": "Use the @wrap_tool_call middleware on create_agent to wrap all tool calls and inspect MCP provenance via metadata['mcp']. MCP tools reporting isError=True are sent to the model as a ToolMessage with status='error' containing the server’s message, while transport failures raise exceptions.",
+  //   "source_docs": [
+  //     "python/migrate/langchain-mcp-adapters.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "90dc5e2b3ce227829af424d0ce2ee15e",
+  //     "27a28c4656376ec1ade9790fa008def1"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q033",
+  //   "input": "How can I configure the stream invocation on a parent StateGraph so that I also receive the outputs generated by its nested subgraph?",
+  //   "expected_output": "When calling graph.stream, include the argument subgraphs=True to enable streaming of outputs from any nested subgraphs.",
+  //   "source_docs": [
+  //     "how-tos/streaming.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "5e0353718f0590b23d27954043a0f757",
+  //     "4580ad2b4042d382f971e533530c3716"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q034",
+  //   "input": "Which API should I choose if I need to manage shared state across components and visualize complex branching in my workflow?",
+  //   "expected_output": "Use the Graph API when you need to share and coordinate state between different parts of your workflow and visualize complex decision branches. It uses a declarative approach where you define nodes, edges, and shared state to create a clear graphical representation.",
+  //   "source_docs": [
+  //     "langgraph/choosing-apis.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "dbfc87862d3c161ff68233e8b409e5c2",
+  //     "7ed51e86b0e5562fe1c8cf4c0ac56e72"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q035",
+  //   "input": "What option must be enabled when starting the multi-agent graph stream to include updates from subgraphs, and how does the handoff tool tell LangGraph to switch back to the parent node?",
+  //   "expected_output": "You pass { subgraphs: true } to multiAgentGraph.stream to include subgraph updates, and the handoff tool sets the Command’s graph property to Command.PARENT to navigate back to the parent node.",
+  //   "source_docs": [
+  //     "how-tos/multi_agent.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "cea55941a6d2918b1c3a46a518ae1a00",
+  //     "13ff790eed36733c3ec47a686bfd969d"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q036",
+  //   "input": "How do I initialize the Redis backend for long-term chat memory and then add a new memory entry when the user asks the assistant to remember something?",
+  //   "expected_output": "You open a RedisStore with RedisStore.from_conn_string(DB_URI) and call store.setup(), then when the user requests to remember you invoke store.put(namespace, str(uuid.uuid4()), {\"data\": memory}).",
+  //   "source_docs": [
+  //     "how-tos/memory/add-memory.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "8b6ac357783e976942b3265bdee8a1b5",
+  //     "2be691d4c3d9a6ca889a8c6241d45cc9"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q037",
+  //   "input": "In LangGraph, how do long-term and short-term memory differ in scope, and which memory type is used to store past agent actions?",
+  //   "expected_output": "Long-term memory is saved within custom namespaces and persists across conversations, while short-term memory is thread-scoped; past agent actions are stored in episodic memory.",
+  //   "source_docs": [
+  //     "concepts/memory.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "dcf8f1b99080f64c26ecdd3737eb4d61",
+  //     "aa8b1a13e78aed096c2c5e3ac40d4d02"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q038",
+  //   "input": "In a LangGraph project, which file in the root directory stores project-specific key/value settings and which file does the CLI use by default for application configuration?",
+  //   "expected_output": "The .env file in the project root stores your key/value settings, and the CLI defaults to using the langgraph.json file in the current directory for configuration.",
+  //   "source_docs": [
+  //     "concepts/application_structure.md"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "5cbf7e0f9781c2a3f5299205d57429a8",
+  //     "894aa3fae440d9b8428e6e0611047eca"
+  //   ],
+  //   "library": "langgraph",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q039",
+  //   "input": "How do I install LangChain with MCP support, and which tool lets me read documentation through virtual filesystem commands?",
+  //   "expected_output": "Install with pip install \"langchain[mcp]\", and the query_docs_filesystem_docs_by_lang_chain tool lets you read or search docs through a virtual filesystem.",
+  //   "source_docs": [
+  //     "langchain/mcp/index.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "08f34e1bb6e2b6a216445ffbea1f99aa",
+  //     "cad865b03ef4f8c4a2bacfc6c4bcf97c"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q040",
+  //   "input": "How can I fetch San Francisco’s weather while ensuring conversation threads are stored when running the agent on my machine?",
+  //   "expected_output": "Call the get_weather tool with city='San Francisco', and when you create the agent locally include a checkpointer (for example checkpointer=InMemorySaver()) to persist the thread_id history.",
+  //   "source_docs": [
+  //     "langchain/streaming.mdx"
+  //   ],
+  //   "expected_chunk_ids": [
+  //     "8910884e97201e0538d6cdba9b1aa5d1",
+  //     "a18dff02abb51f74a5537c1a02dd87ac"
+  //   ],
+  //   "library": "langchain",
+  //   "type": "multi_chunk"
+  // },
+  // {
+  //   "id": "q041",
+  //   "input": "How do I deploy a LlamaIndex agent to AWS Lambda?",
+  //   "expected_output": "I don't have information about that in the provided documents.",
+  //   "source_docs": [],
+  //   "expected_chunk_ids": [],
+  //   "library": null,
+  //   "type": "unanswerable"
+  // },
+  // {
+  //   "id": "q042",
+  //   "input": "What is the pricing of the OpenAI API?",
+  //   "expected_output": "I don't have information about that in the provided documents.",
+  //   "source_docs": [],
+  //   "expected_chunk_ids": [],
+  //   "library": null,
+  //   "type": "unanswerable"
+  // },
+  // {
+  //   "id": "q043",
+  //   "input": "How do I train a custom embedding model with PyTorch?",
+  //   "expected_output": "I don't have information about that in the provided documents.",
+  //   "source_docs": [],
+  //   "expected_chunk_ids": [],
+  //   "library": null,
+  //   "type": "unanswerable"
+  // },
+  // {
+  //   "id": "q044",
+  //   "input": "What is the capital of France?",
+  //   "expected_output": "I don't have information about that in the provided documents.",
+  //   "source_docs": [],
+  //   "expected_chunk_ids": [],
+  //   "library": null,
+  //   "type": "unanswerable"
+  // },
+  // {
+  //   "id": "q045",
+  //   "input": "How do I configure Django middleware?",
+  //   "expected_output": "I don't have information about that in the provided documents.",
+  //   "source_docs": [],
+  //   "expected_chunk_ids": [],
+  //   "library": null,
+  //   "type": "unanswerable"
+  // }
+]

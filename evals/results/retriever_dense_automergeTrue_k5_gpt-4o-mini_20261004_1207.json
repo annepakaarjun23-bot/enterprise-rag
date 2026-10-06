@@ -1,0 +1,305 @@
+{
+  "run": "retriever_dense_automergeTrue_k5_gpt-4o-mini_20261004_1207",
+  "config": {
+    "mode": "dense",
+    "automerge": true,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "threshold": 0.7,
+    "max_chars_per_context": 3000,
+    "max_concurrent": 2
+  },
+  "timing": {
+    "retrieve_s": 33.9,
+    "judge_s": 76.8
+  },
+  "summary": {
+    "questions": 13,
+    "passed_all_metrics": 5,
+    "metrics": {
+      "Contextual Precision": {
+        "avg_score": 0.624,
+        "passed": 6,
+        "total": 13
+      },
+      "Contextual Recall": {
+        "avg_score": 0.818,
+        "passed": 10,
+        "total": 13
+      }
+    },
+    "errored_ids": [],
+    "failed_ids": [
+      "q001",
+      "q004",
+      "q005",
+      "q006",
+      "q009",
+      "q011",
+      "q012",
+      "q013"
+    ]
+  },
+  "rows": [
+    {
+      "id": "q001",
+      "input": "I keep getting an unknown model error when invoking the API—what steps should I take to resolve it?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.3333333333333333,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "input": "Which context engineering category is responsible for supplying subagents with optimized information to improve their execution?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "input": "How can I attach a progress callback when initializing a FastMCP client for use with MCPAdapter?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "input": "Why am I getting a 'tool not found' error when using an agent?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.25,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "input": "How do I give an agent access to a custom tool?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "input": "What is the difference between a graph state and a message in LangGraph?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "input": "How can I make a LangGraph workflow remember previous interactions?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "input": "How do I stop a LangGraph workflow from running forever?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "input": "Can a LangGraph node send execution to different nodes depending on the result?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.4777777777777777,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "input": "How do I stream results from a LangGraph application?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q011",
+      "input": "Why isn't my LangChain retriever returning the documents I expect?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "input": "How can I add metadata filters to document retrieval?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.2,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q013",
+      "input": "What should I check if my LangGraph state isn't updating?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.6791666666666667,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

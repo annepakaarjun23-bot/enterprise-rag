@@ -1,0 +1,1052 @@
+{
+  "run": "retriever_dense_automergeTrue_k5_gpt-4o-mini_20261005_0919",
+  "config": {
+    "mode": "dense",
+    "automerge": true,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "threshold": 0.7,
+    "max_chars_per_context": 3000,
+    "max_concurrent": 2
+  },
+  "timing": {
+    "retrieve_s": 51.6,
+    "judge_s": 416.9
+  },
+  "summary": {
+    "questions": 50,
+    "passed_all_metrics": 35,
+    "metrics": {
+      "Contextual Precision": {
+        "avg_score": 0.794,
+        "passed": 38,
+        "total": 50
+      },
+      "Contextual Recall": {
+        "avg_score": 0.837,
+        "passed": 40,
+        "total": 50
+      }
+    },
+    "errored_ids": [],
+    "failed_ids": [
+      "q003",
+      "q011",
+      "q020",
+      "q027",
+      "q028",
+      "q031",
+      "q033",
+      "q035",
+      "q036",
+      "q040",
+      "q041",
+      "q042",
+      "q045",
+      "q048",
+      "q049"
+    ]
+  },
+  "rows": [
+    {
+      "id": "q002",
+      "input": "Which context engineering category is responsible for supplying subagents with optimized information to improve their execution?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q001",
+      "input": "I keep getting an unknown model error when invoking the API—what steps should I take to resolve it?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "input": "How can I attach a progress callback when initializing a FastMCP client for use with MCPAdapter?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.2,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "input": "How do I resume my workflow after it crashed with an error?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "input": "What's the difference between short-term and long-term memory in LangGraph?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "input": "How can I make my agent return a Pydantic model instead of raw text?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8666666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "input": "My MCP tool returns isError=True—how does the agent handle this now?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8666666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "input": "How do I add authentication to my FastMCP client when using MCPAdapter?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "input": "Can I still use load_mcp_prompt in langchain.mcp?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "input": "How do I stream both tokens and tool calls from my agent?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q011",
+      "input": "What happened to the prompted output option in create_agent?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.2,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "input": "How do I run evals and track them in LangSmith?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q013",
+      "input": "Can I have private state in a subgraph that's hidden from the parent?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q014",
+      "input": "How do I add retry logic around model calls in my agent?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.9166666666666666,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q015",
+      "input": "What's the difference between node-style and wrap-style hooks in middleware?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q016",
+      "input": "How do I update agent state from middleware?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q017",
+      "input": "How do I implement human-in-the-loop to review tool calls before execution?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8875,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q018",
+      "input": "How can I view the history of checkpoints for a thread?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8875,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q019",
+      "input": "How do I return a different value to the caller than what I save to checkpoint?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q020",
+      "input": "What changed with streaming node names in v1?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q021",
+      "input": "How do I build a voice agent with sub-700ms latency?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q022",
+      "input": "How do I enable LangSmith tracing for my application?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q023",
+      "input": "How do I handle state schema changes without breaking existing checkpoints?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.7,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q024",
+      "input": "How do I transfer control between agents in a multi-agent system?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q025",
+      "input": "What's the difference between checkpointers and stores?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.7,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q026",
+      "input": "How do I implement a message limit for my agent conversation?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q027",
+      "input": "Can I use content blocks with any LLM provider?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q028",
+      "input": "How do I convert MCP tools to LangChain tools in the new version?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q029",
+      "input": "How do I build a simple chatbot that remembers previous messages?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.8,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q030",
+      "input": "What are the pros and cons of speech-to-speech architecture for voice agents?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q031",
+      "input": "My agent works fine in testing but loses context in production with multiple users—what's wrong?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q032",
+      "input": "How do I stop my ReAct agent from going into infinite tool-calling loops?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q033",
+      "input": "Can I use LangChain with local LLMs like Ollama or llama.cpp?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q034",
+      "input": "What's the best way to handle rate limits when calling OpenAI from my chain?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8666666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q035",
+      "input": "How do I stream just the final answer from my RAG chain, not the intermediate steps?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.2,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q036",
+      "input": "My vector search returns results but they're not relevant—how do I improve this?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.25,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q037",
+      "input": "Can I run multiple tools in parallel in my LangGraph agent?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q038",
+      "input": "How do I add a system prompt to my create_agent?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q039",
+      "input": "What's the difference between invoke, stream, and batch in LCEL?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q040",
+      "input": "How do I save and load my LangGraph checkpoint to disk?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.25,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q041",
+      "input": "My tool is returning 'ToolMessage content must be a string' error—how do I fix this?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.6388888888888888,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q042",
+      "input": "Can I use LangChain with Azure OpenAI instead of regular OpenAI?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.25,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q043",
+      "input": "How do I implement a router that sends questions to different specialized agents?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q044",
+      "input": "What's the proper way to handle API keys without hardcoding them?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q045",
+      "input": "How do I make my RAG chain return sources/citations with the answer?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.0,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.6,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q046",
+      "input": "Can I pause my graph mid-execution and wait for external input?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8875,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q047",
+      "input": "How do I convert my old LangChain agent to the new create_agent format?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8041666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q048",
+      "input": "What's the best way to debug why my agent made a specific decision?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.2,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q049",
+      "input": "How do I handle long documents that exceed my model's context window in RAG?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.3333333333333333,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q050",
+      "input": "Can I use LangGraph without LangChain models?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

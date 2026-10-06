@@ -1,0 +1,383 @@
+{
+  "run": "e2e_hybrid_automergeTrue_rerankFalse_k5_gpt-4o-mini_20261005_1210",
+  "config": {
+    "mode": "hybrid",
+    "automerge": true,
+    "rerank": false,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "max_concurrent": 2,
+    "gen_concurrency": 4
+  },
+  "timing": {
+    "retrieve_s": 14.9,
+    "generate_s": 17.4,
+    "judge_s": 427.4
+  },
+  "summary": {
+    "questions": 10,
+    "passed_all_metrics": 5,
+    "metrics": {
+      "Contextual Precision": {
+        "avg_score": 0.97,
+        "passed": 10,
+        "total": 10
+      },
+      "Contextual Recall": {
+        "avg_score": 0.864,
+        "passed": 8,
+        "total": 10
+      },
+      "Faithfulness": {
+        "avg_score": 0.807,
+        "passed": 6,
+        "total": 10
+      },
+      "Answer Relevancy": {
+        "avg_score": 0.811,
+        "passed": 7,
+        "total": 10
+      }
+    },
+    "errored_ids": [],
+    "failed_ids": [
+      "q001",
+      "q002",
+      "q006",
+      "q007",
+      "q009"
+    ]
+  },
+  "rows": [
+    {
+      "id": "q001",
+      "input": "I keep getting an unknown model error when invoking the API—what steps should I take to resolve it?",
+      "answer": "\n## Verify the model identifier and check proxy/wrapper configurations\n\nTo resolve the unknown model error, follow these steps:\n\n1. **Verify the model identifier**: Double check the model string you are passing in. Ensure the spelling and format are correct.\n2. **Check proxy/wrapper configurations**: If you are using a proxy or other alternative host with a model wrapper, confirm that the permitted model names are not restricted or altered.\n\nThe error typically stems from either a typo in the model name string itself or restrictions imposed by a proxy service or model wrapper between your code and the provider's API.\n\n### Example code to verify the model identifier:\n\n```python\nfrom langchain.chat_models import init_chat_model\n\nmodel = init_chat_model(\"openai:gpt-5.6-luna\")  # Ensure the model string is correct\ntry:\n    response = model.invoke(\"Hello\")\nexcept ModelInvalidRequestError:\n    print(\"Model identifier is incorrect\")\n```\n\n### Example code to check proxy/wrapper configurations:\n\n```python\nfrom langchain.chat_models import init_chat_model\n\nmodel = init_chat_model(\"openai:gpt-5.6-luna\", proxy_url=\"https://my-proxy.com\")  # Ensure the proxy URL is correct\ntry:\n    response = model.invoke(\"Hello\")\nexcept ModelInvalidRequestError:\n    print(\"Proxy/wrapper configuration is incorrect\")\n```\n\nIf the issue persists, consider checking the provider's documentation for any model name restrictions or required configurations.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.2222222222222222,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5714285714285714,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "input": "Which context engineering category is responsible for supplying subagents with optimized information to improve their execution?",
+      "answer": "\n## Subagent inputs\nSubagent inputs are responsible for ensuring subagents can execute well with optimized context. This category impacts subagent performance.\n\nThis category is one of the three ways to manage context provided by LangGraph, which combines the mutability and lifetime dimensions.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "input": "How can I attach a progress callback when initializing a FastMCP client for use with MCPAdapter?",
+      "answer": "\n## Attaching a Progress Callback to a FastMCP Client\n\nTo attach a progress callback when initializing a FastMCP client for use with `MCPAdapter`, you can pass the `progress_handler` argument to the `Client` constructor.\n\n```python\nfrom fastmcp.client import Client\n\nfrom langchain.mcp import MCPAdapter\n\ndef on_progress(progress):\n    # Your progress callback function\n    print(f\"Progress: {progress}\")\n\nclient = Client(\"https://example.com/mcp\", progress_handler=on_progress)\nasync with MCPAdapter(client) as adapter:\n    tools = await adapter.list_tools()\n```\n\nIn this example, the `on_progress` function is called with the progress updates from the FastMCP client. You can replace this function with your own implementation to handle the progress updates as needed.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "input": "How do I resume my workflow after it crashed with an error?",
+      "answer": "\n\n## Resuming after an error\n\nTo resume your workflow after it crashed with an error, you can run the `entrypoint` with a `None` input and the same **thread id** (config).\n\n```python\nconfig = {\n    \"configurable\": {\n        \"thread_id\": \"some_thread_id\"\n    }\n}\n\nmy_workflow.invoke(None, config)\n```\n\nThis assumes that the underlying error has been resolved and execution can proceed successfully.\n\nNote that the `thread_id` must match the one used in the original invocation.\n\nYou can also use the `ainvoke` method for asynchronous workflows:\n\n```python\nawait my_workflow.ainvoke(None, config)\n```\n\nOr use the `stream_events` method to stream events and resume from the last checkpoint:\n\n```python\nstream = my_workflow.stream_events(None, config, version=\"v3\")\nfor message in stream.messages:\n    for token in message.text:\n        print(token, end=\"\", flush=True)\n```\n\nOr use the `astream_events` method for asynchronous workflows:\n\n```python\nstream = await my_workflow.astream_events(None, config, version=\"v3\")\nasync for message in stream.messages:\n    async for token in message.text:\n        print(token, end=\"\", flush=True)\n```\n\nMake sure to replace `my_workflow` with the actual name of your workflow and `some_thread_id` with the actual thread id used in the original invocation.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "input": "What's the difference between short-term and long-term memory in LangGraph?",
+      "answer": "\n\n## Short-term vs. Long-term Memory in LangGraph\n\nShort-term memory in LangGraph is thread-scoped and persists within a single thread, whereas long-term memory is shared across conversational threads and persists across sessions.\n\n### Short-term Memory\n\n*   Thread-scoped\n*   Persists within a single thread\n*   Managed as part of the agent's state\n*   Updated when the graph is invoked or a step is completed\n*   Read at the start of each step\n\n### Long-term Memory\n\n*   Shared across conversational threads\n*   Persists across sessions\n*   Scoped to custom namespaces\n*   Can be recalled at any time and in any thread\n\nTo enable persistent storage for long-term memories, configure a `CompositeBackend` that routes specific paths (like `/memories/`) to a `StoreBackend`.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.875,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "input": "How can I make my agent return a Pydantic model instead of raw text?",
+      "answer": "\n**To make your agent return a Pydantic model instead of raw text, you need to use the `response_format` argument with `ToolStrategy` or `ProviderStrategy` in the `create_agent` function.**\n\nYou can use the `ToolStrategy` like this:\n```python\nfrom langchain.agents import create_agent\nfrom pydantic import BaseModel\n\nclass OutputSchema(BaseModel):\n    summary: str\n    sentiment: str\n\nagent = create_agent(\n    model=\"gpt-5.4-mini\",\n    tools=tools,\n    response_format=ToolStrategy(OutputSchema)\n)\n```\nOr use the `ProviderStrategy` like this:\n```python\nfrom langchain.agents import create_agent\nfrom pydantic import BaseModel\n\nclass OutputSchema(BaseModel):\n    summary: str\n    sentiment: str\n\nagent = create_agent(\n    model=\"gpt-5.4-mini\",\n    tools=tools,\n    response_format=ProviderStrategy(OutputSchema)\n)\n```\nNote that you need to define a Pydantic model `OutputSchema` that matches the structure of the output you want to receive.\n\n**Important:** In LangChain v1, `ToolStrategy` and `ProviderStrategy` are the new structured output strategies. `Pydantic models` are no longer supported as state schemas. Instead, you can use `TypedDict` for state schemas.",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8333333333333333,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.75,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5555555555555556,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "input": "My MCP tool returns isError=True—how does the agent handle this now?",
+      "answer": "\n\nAn MCP tool that reports `isError=True` is now handled as a `ToolMessage` with `status=\"error\"` carrying the server's message [S2]. This behavior is fixed and no longer configurable via the `handle_tool_errors` flag, which has been removed [S5].",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 0.8666666666666667,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "input": "How do I add authentication to my FastMCP client when using MCPAdapter?",
+      "answer": "\n\nAuthentication for MCPAdapter is handled through the `fastmcp.Client` object. You can pass a credential to the client, which can be a bearer token, the literal string `\"oauth\"` for OAuth 2.1, or any `httpx.Auth` object. Here's an example:\n\n```python\nfrom fastmcp.client import Client\nfrom fastmcp.client.auth import OAuth\n\noauth = OAuth(mcp_url=\"https://example.com/mcp\", token_storage=...)\nclient = Client(\"https://example.com/mcp\", auth=oauth)\n```\n\nYou can then pass this client to the `MCPAdapter`:\n\n```python\nfrom langchain.mcp import MCPAdapter\n\nadapter = MCPAdapter(client=client)\n```\n\nThis will authenticate the MCPAdapter using the credential passed to the client.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "input": "Can I still use load_mcp_prompt in langchain.mcp?",
+      "answer": "\n\nNo, there is no `load_mcp_prompt` in `langchain.mcp`. The `langchain-mcp-adapters` helpers, including `load_mcp_prompt`, have no `langchain.mcp` equivalent yet [S1]. You can read prompts directly through the FastMCP client: `client.get_prompt(...)` [S1].\n\nIf you need to load an MCP prompt, you can use the `langchain-mcp-adapters` package, but it is not recommended as it is not maintained and has no `langchain.mcp` equivalent. \n\n```python\n# langchain-mcp-adapters\nfrom langchain.mcp_adapters import load_mcp_prompt\n\nprompt = load_mcp_prompt('https://example.com/prompt')\n```\n\nHowever, it is recommended to use the FastMCP client directly:\n\n```python\n# FastMCP client\nfrom fastmcp import Client\n\nclient = Client('https://example.com')\nprompt = client.get_prompt()\n```",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 0.5714285714285714,
+          "passed": false,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.3333333333333333,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "input": "How do I stream both tokens and tool calls from my agent?",
+      "answer": "\n\n### Streaming Tokens and Tool Calls\n\nTo stream both tokens and tool calls from your agent, you can use the `stream_mode` parameter when calling the `stream` method.\n\n### Code\n\n```python\nfor chunk in agent.stream(\n    {\"messages\": [input_message]},\n    stream_mode=[\"messages\", \"tool_calls\"],  # [!code highlight]\n    version=\"v2\",  # [!code highlight]\n):\n    if chunk[\"type\"] == \"messages\":  # [!code highlight]\n        token, metadata = chunk[\"data\"]  # [!code highlight]\n        if isinstance(token, AIMessageChunk):\n            _render_message_chunk(token)\n    elif chunk[\"type\"] == \"tool_calls\":  # [!code highlight]\n        print(f\"Tool calls: {chunk['data']}\")\n```\n\n### Details\n\n*   `stream_mode=[\"messages\", \"tool_calls\"]` tells the agent to stream both tokens and tool calls.\n*   The `version` parameter is set to `\"v2\"` to match the example code in the context.\n*   In the loop, we check the `chunk[\"type\"]` to determine whether it's a message or a tool call. If it's a message, we render the message chunk. If it's a tool call, we print the tool calls.\n\n### Note\n\nMake sure to check the version of the `langchain` library you are using, as the `stream_mode` parameter may behave differently across versions.",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Precision",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Contextual Recall",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Faithfulness",
+          "score": 1.0,
+          "passed": true,
+          "error": null
+        },
+        {
+          "name": "Answer Relevancy",
+          "score": 0.8571428571428571,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

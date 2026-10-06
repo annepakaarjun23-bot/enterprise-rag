@@ -1,0 +1,180 @@
+{
+  "run": "retriever_hybrid_automergeTrue_k5_gpt-4o-mini_20261005_1144",
+  "config": {
+    "mode": "hybrid",
+    "automerge": true,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "threshold": 0.7,
+    "max_chars_per_context": 3000,
+    "max_concurrent": 2
+  },
+  "timing": {
+    "retrieve_s": 15.9,
+    "judge_s": 307.8
+  },
+  "summary": {
+    "questions": 10,
+    "passed_all_metrics": 2,
+    "metrics": {
+      "Contextual Relevancy": {
+        "avg_score": 0.429,
+        "passed": 2,
+        "total": 10
+      }
+    },
+    "errored_ids": [],
+    "failed_ids": [
+      "q002",
+      "q003",
+      "q004",
+      "q005",
+      "q006",
+      "q007",
+      "q008",
+      "q009"
+    ]
+  },
+  "rows": [
+    {
+      "id": "q001",
+      "input": "I keep getting an unknown model error when invoking the API—what steps should I take to resolve it?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.7096774193548387,
+          "passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "input": "Which context engineering category is responsible for supplying subagents with optimized information to improve their execution?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.14814814814814814,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "input": "How can I attach a progress callback when initializing a FastMCP client for use with MCPAdapter?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.12903225806451613,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "input": "How do I resume my workflow after it crashed with an error?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.6666666666666666,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "input": "What's the difference between short-term and long-term memory in LangGraph?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.5714285714285714,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "input": "How can I make my agent return a Pydantic model instead of raw text?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.23255813953488372,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "input": "My MCP tool returns isError=True—how does the agent handle this now?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.20689655172413793,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "input": "How do I add authentication to my FastMCP client when using MCPAdapter?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.5,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "input": "Can I still use load_mcp_prompt in langchain.mcp?",
+      "success": false,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.30434782608695654,
+          "passed": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "input": "How do I stream both tokens and tool calls from my agent?",
+      "success": true,
+      "has_error": false,
+      "metrics": [
+        {
+          "name": "Contextual Relevancy",
+          "score": 0.8181818181818182,
+          "passed": true,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "run": "retriever_dense_automergeTrue_k5_gpt-4o-mini_20261004_1105",
+  "date": "2026-10-04T11:08:37",
+  "config": {
+    "mode": "dense",
+    "automerge": true,
+    "k": 5,
+    "judge_model": "openai/gpt-4o-mini",
+    "threshold": 0.7,
+    "max_chars_per_context": 3000
+  },
+  "questions": 3,
+  "questions_passed_all_metrics": 0,
+  "avg_coverage": 1.0,
+  "metrics": {
+    "Contextual Precision": {
+      "avg_score": 0.9,
+      "pass_rate": 1.0,
+      "passed": 3,
+      "total": 3
+    },
+    "Contextual Recall": {
+      "avg_score": 0.756,
+      "pass_rate": 0.333,
+      "passed": 1,
+      "total": 3
+    },
+    "Contextual Relevancy": {
+      "avg_score": 0.423,
+      "pass_rate": 0.333,
+      "passed": 1,
+      "total": 3
+    }
+  },
+  "questions_with_errors": [],
+  "failed_question_ids": [
+    "q001",
+    "q002",
+    "q003"
+  ],
+  "seconds": 162.2
+}

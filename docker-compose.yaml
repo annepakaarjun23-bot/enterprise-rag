@@ -1,40 +1,34 @@
 services:
   postgres:
-    image: postgres:16
+    image: postgres:16-alpine
     container_name: rag-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-rag}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rag_password}
-      POSTGRES_DB: ${POSTGRES_DB:-rag}
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: rag
+      POSTGRES_DB: rag
+      # ensure UTF-8 handling
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U rag -d rag"]
+      interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
   qdrant:
-    # Pin a specific version; keep qdrant-client within one minor version of it
-    image: qdrant/qdrant:v1.12.4
+    image: qdrant/qdrant:latest
     container_name: rag-qdrant
     restart: unless-stopped
     ports:
-      - "6335:6333"   # <--- CHANGED THIS: Windows 6335 maps to Container 6333
-      - "6334:6334"   # gRPC
+      - "7333:6333"   # host 7333 -> container 6333
+      - "7334:6334"   # host 7334 -> container 6334
     volumes:
       - qdrant_data:/qdrant/storage
-    healthcheck:
-      # the Qdrant image has no curl, so test the port with bash
-      test: ["CMD-SHELL", "bash -c ':> /dev/tcp/127.0.0.1/6333' || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
 
 volumes:
-  postgres_data:
+  pgdata:
   qdrant_data:

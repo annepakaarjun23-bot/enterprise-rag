@@ -71,7 +71,7 @@ PostgreSQL is the source of truth for all chunks. Qdrant and the parent docstore
 ### Installation
 
 ```bash
-git clone <repo>
+git clone https://github.com/annepakaarjun23-bot/enterprise-rag
 cd enterprise-rag
 
 python -m venv .venv

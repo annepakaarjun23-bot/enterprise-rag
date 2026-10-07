@@ -210,7 +210,7 @@ All metrics come from DeepEval and are scored by an LLM judge (gpt-4o-mini) with
 
 ### Dashboard
 
-![Evaluation dashboard](docs/images/eval_dashboard.png)
+![Evaluation dashboard](docs/images/new_eval_dashboard.png)
 
 The dashboard is generated from the run logs with `python scripts/make_dashboard.py`.
 
